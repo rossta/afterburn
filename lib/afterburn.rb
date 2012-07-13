@@ -1,7 +1,10 @@
 require 'redis/namespace'
 require "afterburn/engine"
+require "afterburn/helpers"
 require "afterburn/persistence"
+require "afterburn/api_wrapper"
 require "afterburn/board"
+require "afterburn/member"
 
 module Afterburn
   extend self

@@ -18,7 +18,8 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
 
   describe "self.save" do
     it "should persist trello board" do
-      Afterburn::Board.save(trello_board)
+      board = Afterburn::Board.new(trello_board)
+      Afterburn::Board.save(board)
       Trello::Board.should_not_receive(:find)
       loaded_board = Afterburn::Board.find(trello_board.id)
       loaded_board.trello_board.should eq(trello_board)
@@ -52,12 +53,12 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
     end
   end
 
-  describe "sync" do
+  describe "fetch" do
     it "retrieves and saves trello board via api" do
       board = Afterburn::Board.new(trello_board)
       new_trello_board = OpenStruct.new(:id => trello_board.id)
       Trello::Board.should_receive(:find).with(board.id).and_return(new_trello_board)
-      board.sync
+      board.fetch
       board.trello_board.should eq(new_trello_board)
       Marshal.restore(Afterburn.redis.get("board:#{trello_board.id}")).should eq(new_trello_board)
     end

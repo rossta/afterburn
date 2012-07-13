@@ -1,6 +1,5 @@
 module Afterburn
   module Persistence
-    include Marshal
 
     def redis
       Afterburn.redis
@@ -11,7 +10,7 @@ module Afterburn
       when String, Fixnum, Bignum, Float
         value
       else
-        dump(value)
+        Marshal.dump(value)
       end
     end
 
@@ -22,7 +21,7 @@ module Afterburn
       when Hash
         value.inject({}) { |h, (k, v)| h[k] = marshal_load(v); h }
       else
-        load(value) rescue value
+        Marshal.load(value) rescue value
       end
     end
 
