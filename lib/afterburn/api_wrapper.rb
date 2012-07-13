@@ -12,10 +12,9 @@ module Afterburn
       end
 
       def save(instance)
-        instance.tap do
-          trello_object = instance.trello_object
-          redis.set("#{wrapper_name}:#{trello_object.id}", marshal_dump(trello_object))
-        end
+        trello_object = instance.trello_object
+        redis.set("#{wrapper_name}:#{trello_object.id}", marshal_dump(trello_object))
+        instance
       end
 
       def find(id)

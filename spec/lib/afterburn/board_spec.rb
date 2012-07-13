@@ -3,7 +3,7 @@ require 'ostruct'
 
 describe Afterburn::Board, :vcr, :record => :new_episodes do
   def fetch_trello_board
-    Afterburn::Board.fetch_by_member('rossta').first
+    Trello::Member.find('rossta').boards.first
   end
 
   let(:trello_board) { fetch_trello_board }
