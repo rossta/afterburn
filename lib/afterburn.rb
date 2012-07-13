@@ -5,6 +5,7 @@ require "afterburn/persistence"
 require "afterburn/api_wrapper"
 require "afterburn/board"
 require "afterburn/member"
+require "afterburn/list"
 
 module Afterburn
   extend self
