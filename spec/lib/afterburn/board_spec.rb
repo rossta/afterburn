@@ -7,6 +7,9 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
   end
 
   let(:trello_board) { fetch_trello_board }
+  let(:board) { Afterburn::Board.new(trello_board.id) }
+
+  it { Afterburn::Board.new(trello_board.id).id.should eq(trello_board.id) }
 
   describe "self.fetch_by_member" do
     it "should retrieve boards for given member" do
@@ -16,53 +19,27 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
     end
   end
 
-  describe "self.save" do
-    it "should persist trello board" do
-      board = Afterburn::Board.new(trello_board)
-      Afterburn::Board.save(board)
-      Trello::Board.should_not_receive(:find)
-      loaded_board = Afterburn::Board.find(trello_board.id)
-      loaded_board.trello_board.should eq(trello_board)
-    end
-  end
-
-  describe "self.find" do
-    it "should get board via api and marshal result if not found in redis" do
-      Afterburn.redis.get("board:#{trello_board.id}").should be_nil
-      board = Afterburn::Board.find(trello_board.id)
-      board.trello_board.should eq(trello_board)
-      Marshal.restore(Afterburn.redis.get("board:#{trello_board.id}")).should eq(trello_board)
+  describe "load" do
+    it "fetches if trello board isn't stored" do
+      board.should_receive(:fetch)
+      board.load
     end
 
-    it "should get load marshaled board result if found in redis" do
-      Afterburn::Board.find(trello_board.id)
-      Trello::Board.should_not_receive(:find)
-      board = Afterburn::Board.find(trello_board.id)
-      board.trello_board.should eq(trello_board)
-    end
-  end
+    it "retrieves from redis if previously fetched" do
+      board.fetch
 
-  it { Afterburn::Board.new(trello_board).id.should eq(trello_board.id) }
-
-  describe "save" do
-    it "marshals trello board in redis" do
-      Afterburn.redis.get("board:#{trello_board.id}").should be_nil
-      board = Afterburn::Board.new(trello_board)
-      board.save
-      Marshal.restore(Afterburn.redis.get("board:#{trello_board.id}")).should eq(trello_board)
+      board_2 = Afterburn::Board.new(trello_board.id)
+      board_2.should_not_receive(:fetch)
+      board_2.load
     end
   end
 
   describe "fetch" do
     it "retrieves and saves trello board via api" do
-      board = Afterburn::Board.new(trello_board)
       new_trello_board = OpenStruct.new(:id => trello_board.id)
       Trello::Board.should_receive(:find).with(board.id).and_return(new_trello_board)
       board.fetch
       board.trello_board.should eq(new_trello_board)
-      Marshal.restore(Afterburn.redis.get("board:#{trello_board.id}")).should eq(new_trello_board)
     end
-
   end
-
 end

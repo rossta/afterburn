@@ -1,4 +1,5 @@
 require "afterburn/engine"
+require 'redis/objects'
 
 module Afterburn
   autoload :RedisConnection, "afterburn/redis_connection"
