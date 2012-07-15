@@ -1,8 +1,5 @@
-require "trello"
-
 module Afterburn
-  class Board
-    include ApiWrapper
+  class Board < TrelloObjectWrapper
     wrap :board
 
     def self.fetch_by_member(member_name)

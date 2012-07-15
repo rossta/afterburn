@@ -1,6 +1,5 @@
 module Afterburn
-  class Member
-    include ApiWrapper
+  class Member < TrelloObjectWrapper
     wrap :member
 
   end

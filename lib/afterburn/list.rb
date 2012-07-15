@@ -1,7 +1,5 @@
 module Afterburn
-  class List
-    include ApiWrapper
-
+  class List < TrelloObjectWrapper
     wrap :list
 
     value :cumulative
