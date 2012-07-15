@@ -3,7 +3,7 @@ require "base64"
 module Afterburn
   class ListMetric
     include Redis::Objects
-    counter :cards
+    counter :card_count
 
     def initialize(list, timestamp = Time.now)
       @list = list
@@ -15,7 +15,7 @@ module Afterburn
     end
 
     def count!
-      cards.incr(@list.card_count)
+      card_count.incr(@list.card_count)
     end
 
   end

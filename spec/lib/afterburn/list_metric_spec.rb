@@ -12,6 +12,6 @@ describe Afterburn::ListMetric do
     list.stub!(:card_count => 3)
     list_metric = Afterburn::ListMetric.new(list)
     list_metric.count!
-    list_metric.cards.should eq(3)
+    list_metric.card_count.should eq(3)
   end
 end
