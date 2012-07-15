@@ -8,7 +8,7 @@ module Afterburn
   autoload :Board, "afterburn/board"
   autoload :Member, "afterburn/member"
   autoload :List, "afterburn/list"
-  autoload :CardCounter, "afterburn/card_counter"
+  autoload :ListMetric, "afterburn/list_metric"
 
   extend RedisConnection
 end

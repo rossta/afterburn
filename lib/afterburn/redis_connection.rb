@@ -29,6 +29,9 @@ module Afterburn
       else
         @redis = Redis::Namespace.new(:afterburn, :redis => server)
       end
+      Redis.current = @redis
+
+      @redis
     end
 
     # Returns the current Redis connection. If none has been created, will

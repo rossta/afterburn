@@ -6,7 +6,6 @@ if !system("which redis-server")
   abort ''
 end
 
-
 #
 # start our own redis when the tests start,
 # kill it when they end

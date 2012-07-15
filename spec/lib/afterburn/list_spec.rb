@@ -37,21 +37,42 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
   end
 
   describe "#card_count" do
-    it "returns total count of associated cards" do
-      list.card_count.reset 2
-      list.card_count.should eq(2)
+    it "returns total count of cards on trello_list" do
+      count = trello_list.cards.count
+      list.load
+      list.card_count.should eq(count)
     end
   end
 
-  describe "#cumulative?" do
-    it "is true if cumulative flag" do
-      list.cumulative = true
-      list.cumulative?.should be_true
+  describe "flow_role" do
+    it "can be 'backlog'" do
+      list.flow_role = 'backlog'
+      list.flow_role.should eq('backlog')
     end
 
-    it "is false" do
-      list.cumulative = false
-      list.cumulative?.should be_false
+    it "can be 'WIP'" do
+      list.flow_role = 'WIP'
+      list.flow_role.should eq('WIP')
+    end
+
+    it "can be 'deployed'" do
+      list.flow_role = 'deployed'
+      list.flow_role.should eq('deployed')
+    end
+
+    it "can be 'ignored'" do
+      list.flow_role = 'ignored'
+      list.flow_role.should eq('ignored')
+    end
+
+    it "raises an error if set to unknown role" do
+      lambda { list.flow_role = 'foobar' }.should raise_error(Afterburn::List::UnknownFlowRole)
+    end
+
+    it "is persisted" do
+      list.flow_role = 'backlog'
+      new_list = Afterburn::List.new(list.id)
+      new_list.flow_role.should eq('backlog')
     end
   end
 
