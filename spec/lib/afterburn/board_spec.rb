@@ -21,7 +21,6 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
 
   describe "load" do
     it "fetches if trello board isn't stored" do
-      board.trello_board.should be_nil
       board.should_receive(:fetch)
       board.load
     end

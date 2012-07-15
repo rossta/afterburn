@@ -46,7 +46,7 @@ module Afterburn
     end
 
     def load
-      fetch if trello_object.nil?
+      trello_object
       self
     end
 
@@ -62,8 +62,10 @@ module Afterburn
     end
 
     def trello_object
+      fetch if trello_object_store.value.nil?
       trello_object_store.value
     end
+    alias_method :fetch_trello_object, :trello_object
 
     def redis_key(*values)
       (["#{wrapper_name}:#{id}"] + values).join(":")
