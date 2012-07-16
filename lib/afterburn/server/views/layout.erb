@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Afterburn</title>
+</head>
+<body>
+  <div class="header">
+    <ul class='nav'>
+    </ul>
+  </div>
+
+<div id="main">
+  <%= yield %>
+</div>
+
+<div id="footer">
+  <p>Powered by <a href="https://github.com/rossta/afterburn">Afterburn</a> v<%= Afterburn::VERSION %></p>
+  <p>Connected to Redis namespace <%= Afterburn.redis.namespace %> on <%=Afterburn.redis.client.id%></p>
+</div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-require "afterburn/engine"
+require "afterburn/engine" if defined?(Rails)
 
 module Afterburn
   autoload :RedisConnection, "afterburn/redis_connection"

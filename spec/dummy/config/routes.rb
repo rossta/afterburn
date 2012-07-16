@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Afterburn::Engine => "/afterburn", :as => :burn
+  mount Afterburn::Server.new => "/afterburn", :as => :burn
 end

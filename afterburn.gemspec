@@ -15,12 +15,13 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "rails", "~> 3.2.6"
+  s.add_dependency "sinatra"
   s.add_dependency "redis-namespace"
   s.add_dependency "redis-objects"
   s.add_dependency "ruby-trello"
 
   s.add_development_dependency "mysql2"
+  s.add_development_dependency "rails", "~> 3.2.6"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "capybara"
   s.add_development_dependency "vcr"
