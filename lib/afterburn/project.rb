@@ -9,8 +9,12 @@ module Afterburn
 
     attr_reader :id
 
-    def self.for_member(member_name)
+    def self.by_member_name(member_name)
       Board.fetch_by_member(member_name).map { |board| Project.new(board) }
+    end
+
+    def self.by_member(member)
+      member.boards.map { |board| Project.new(board) }
     end
 
     def initialize(board)

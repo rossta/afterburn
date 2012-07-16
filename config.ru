@@ -11,4 +11,7 @@ if ENV['AFTERBURNCONFIG'] && ::File.exists?(::File.expand_path(ENV['AFTERBURNCON
 end
 
 use Rack::ShowExceptions
+use Rack::Session::Cookie, :secret => "some unique secret string here"
+use Rack::Csrf, :raise => true
+
 run Afterburn::Server.new

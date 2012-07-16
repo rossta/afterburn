@@ -10,19 +10,21 @@ module Afterburn
   autoload :ListMetric, "afterburn/list_metric"
   autoload :BoardInterval, "afterburn/board_interval"
   autoload :Project, "afterburn/project"
+  autoload :Authorization, "afterburn/authorization"
   autoload :Server, "afterburn/server"
 
   extend RedisConnection
   extend self
 
-  include Trello
-  include Trello::Authorization
-  
-  def authorize(member_name)
-    Afterburn::Member.find(member_name).tap do |member|
-      Trello::Authorization.const_set :AuthPolicy, OAuthPolicy
-      OAuthPolicy.consumer_credential = OAuthCredential.new member.trello_user_key, member.trello_user_secret
-      OAuthPolicy.token = OAuthCredential.new member.trello_app_token, nil
-    end
+  def authorize(member_name, &block)
+    Authorization.new(member_name).configure(&block)
+  end
+
+  def current_member
+    @current_member ||= Afterburn::Member.first
+  end
+
+  def current_projects
+    Afterburn::Project.by_member(current_member)
   end
 end

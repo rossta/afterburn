@@ -1,11 +1,8 @@
-<% 
-  @projects = Afterburn::Project.for_member('rossta')
-%>
-<% @projects.each do |project| %>
+<% current_projects.each do |project| %>
   <div id="project_<%= project.id %>"></div>
 <% end %>
 <script type="text/javascript">
   $(function(){
-    Afterburn.setup(<%= @projects.map(&:to_json).to_json %>);
+    Afterburn.setup(<%= current_projects.map(&:to_json).to_json %>);
   });
 </script>
