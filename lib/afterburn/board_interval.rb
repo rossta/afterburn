@@ -1,15 +1,15 @@
+require "base64"
 require 'redis/objects'
 
 module Afterburn
   class BoardInterval
     include Redis::Objects
 
-    attr_reader :timestamp
+    attr_reader :board, :timestamp
 
     def self.find(id)
-      board_id, timestamp = Base64.decode64(id).split(":")
-      board = Board.find(board_id)
-      new(board, timestamp)
+      board_id, timestamp_string = Base64.decode64(id).split(":")
+      new(Board.find(board_id), Time.at(timestamp_string.to_i))
     end
 
     def initialize(board, timestamp = Time.now)
@@ -26,7 +26,7 @@ module Afterburn
     end
 
     def record!
-raise "implement!"
+      list_metrics.map(&:count!)
     end
 
     def ==(other)

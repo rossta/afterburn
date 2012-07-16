@@ -12,10 +12,15 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
   it { Afterburn::Board.new(trello_board.id).id.should eq(trello_board.id) }
 
   describe "self.fetch_by_member" do
-    it "should retrieve boards for given member" do
+    it "should retrieve trello boards for given member" do
       boards = Afterburn::Board.fetch_by_member('rossta')
       board_names = boards.map(&:name)
       board_names.should include("Platform")
+    end
+
+    it "should initialize afterburn boards" do
+      boards = Afterburn::Board.fetch_by_member('rossta')
+      boards.first.should be_a(Afterburn::Board)
     end
   end
 

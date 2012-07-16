@@ -5,15 +5,15 @@ module Afterburn
     delegate :name, :to => :trello_board
 
     def self.fetch_by_member(member_name)
-      Trello::Member.find(member_name).boards
+      Trello::Member.find(member_name).boards.map { |trello_board| initialize_from_trello_object(trello_board) }
     end
 
-    def self.all_by_member(member_name)
-      redis.get("boards:#{member_name}")
+    def lists
+      @lists ||= trello_lists.map { |trello_list| List.initialize_from_trello_object(trello_list) }
     end
 
-    def self.sync_by_member(member_name)
-      fetch_by_member(member_name).map { |trello_board| save(trello_board) }
+    def trello_lists
+      trello_board.lists
     end
 
   end

@@ -26,6 +26,10 @@ module Afterburn
       new(id).fetch
     end
 
+    def self.initialize_from_trello_object(trello_object)
+      new { |board| board.trello_object = trello_object }
+    end
+
     def self.wrapper_class
       constantize("Trello::#{titleize(wrapper_name.to_s)}")
     end
@@ -37,6 +41,7 @@ module Afterburn
 
     def initialize(trello_id = nil)
       @id = trello_id
+      yield self if block_given?
     end
 
     def wrapper_name
@@ -56,6 +61,7 @@ module Afterburn
     end
 
     def trello_object=(object)
+      @id = object.id
       trello_object_store.value = object
     end
 
