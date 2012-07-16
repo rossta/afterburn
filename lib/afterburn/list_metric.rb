@@ -1,8 +1,11 @@
 require "base64"
+require 'redis/objects'
 
 module Afterburn
   class ListMetric
     include Redis::Objects
+
+    attr_reader :timestamp
     counter :card_count
 
     def initialize(list, timestamp = Time.now)

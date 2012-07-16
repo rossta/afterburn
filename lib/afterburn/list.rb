@@ -19,6 +19,7 @@ module Afterburn
     wrap :list
     value :flow_role_store
     set :historical_card_id_set
+    set :metric_timestamp_list
 
     def flow_role=(role)
       raise UnknownFlowRole.new("Tried to set unrecognized '#{role}'") unless FlowRole.valid?(role)
@@ -29,24 +30,24 @@ module Afterburn
       flow_role_store.value
     end
 
-    def cards
+    def trello_cards
       trello_list.cards
     end
 
     def card_count
-      cards.count
+      trello_cards.count
     end
 
     def historical_card_ids
       historical_card_id_set.members
     end
 
-    def update_historical_card_ids!
-      trello_list.cards.map(&:id).each { |card_id| historical_card_id_set << card_id }
-    end
-
     def historical_card_count
       historical_card_id_set.count
+    end
+
+    def update_historical_card_ids!
+      trello_cards.map(&:id).each { |card_id| historical_card_id_set << card_id }
     end
 
   end

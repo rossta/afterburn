@@ -83,20 +83,20 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
 
     it "lists of current cards ids after update" do
       list.update_historical_card_ids!
-      list.historical_card_ids.should include(list.cards.first.id)
+      list.historical_card_ids.should include(list.trello_cards.first.id)
     end
 
     it "lists of previous cards ids after update" do
       list.historical_card_id_set << "12345"
       list.update_historical_card_ids!
       list.historical_card_ids.should include("12345")
-      list.historical_card_ids.should include(list.cards.first.id)
+      list.historical_card_ids.should include(list.trello_cards.first.id)
     end
 
     it "is persisted" do
       list.update_historical_card_ids!
       new_list = Afterburn::List.new(list.id)
-      new_list.historical_card_ids.should include(list.cards.first.id)
+      new_list.historical_card_ids.should include(list.trello_cards.first.id)
     end
   end
 

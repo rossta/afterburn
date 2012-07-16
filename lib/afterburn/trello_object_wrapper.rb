@@ -4,9 +4,7 @@ require 'redis/objects'
 module Afterburn
   class TrelloObjectWrapper
     extend Helpers
-    extend Persistence
     include Helpers
-    include Persistence
 
     def self.inherited(base)
       base.send :include, Redis::Objects
@@ -65,7 +63,6 @@ module Afterburn
       fetch if trello_object_store.value.nil?
       trello_object_store.value
     end
-    alias_method :fetch_trello_object, :trello_object
 
     def redis_key(*values)
       (["#{wrapper_name}:#{id}"] + values).join(":")
