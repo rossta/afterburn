@@ -1,5 +1,4 @@
 require 'trello'
-require "afterburn/engine" if defined?(Rails)
 
 module Afterburn
   autoload :RedisConnection, "afterburn/redis_connection"
@@ -11,6 +10,7 @@ module Afterburn
   autoload :ListMetric, "afterburn/list_metric"
   autoload :BoardInterval, "afterburn/board_interval"
   autoload :Project, "afterburn/project"
+  autoload :Server, "afterburn/server"
 
   extend RedisConnection
   extend self

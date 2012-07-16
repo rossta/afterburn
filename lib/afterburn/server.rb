@@ -3,7 +3,7 @@ require 'erb'
 require 'afterburn'
 require 'afterburn/version'
 
-Afterburn.authorize 'rossta'
+# Afterburn.authorize 'rossta'
 
 module Afterburn
   class Server < Sinatra::Base
