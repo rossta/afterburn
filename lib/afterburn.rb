@@ -1,3 +1,4 @@
+require 'trello'
 require "afterburn/engine" if defined?(Rails)
 
 module Afterburn
@@ -12,4 +13,16 @@ module Afterburn
   autoload :Project, "afterburn/project"
 
   extend RedisConnection
+  extend self
+
+  include Trello
+  include Trello::Authorization
+  
+  def authorize(member_name)
+    Afterburn::Member.find(member_name).tap do |member|
+      Trello::Authorization.const_set :AuthPolicy, OAuthPolicy
+      OAuthPolicy.consumer_credential = OAuthCredential.new member.trello_user_key, member.trello_user_secret
+      OAuthPolicy.token = OAuthCredential.new member.trello_app_token, nil
+    end
+  end
 end

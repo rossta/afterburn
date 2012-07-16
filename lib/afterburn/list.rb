@@ -21,6 +21,10 @@ module Afterburn
     set :historical_card_id_set
     set :metric_timestamp_list
 
+    def name
+      trello_list.name
+    end
+
     def flow_role=(role)
       raise UnknownFlowRole.new("Tried to set unrecognized '#{role}'") unless FlowRole.valid?(role)
       flow_role_store.value = role
@@ -48,6 +52,10 @@ module Afterburn
 
     def update_historical_card_ids!
       trello_cards.map(&:id).each { |card_id| historical_card_id_set << card_id }
+    end
+
+    def card_counts_for_timestamps(timestamps)
+      timestamps.map { |timestamp| ListMetric.new(self, timestamp).card_count.to_i }
     end
 
   end
