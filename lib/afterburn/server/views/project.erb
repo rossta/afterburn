@@ -1,0 +1,30 @@
+Edit list roles:
+<table>
+<% project.lists.each_with_index do |list, index| %>
+  <tr id="list_<%= list.id %>" data-role="list">
+    <%= csrf_tag %>
+    <td><%= list.name %></td>
+    <td><label for='list_name_<%= index %>'>Role</label></td>
+    <td>
+      <select id='list_name_<%= index %>' type='text' name='list[role]' data-url="/lists/<%= list.id %>">
+        <option>Choose a role</option>
+        <% Afterburn::List.roles.each do |role| %>
+          <option value="<%= role %>" <%= "selected" if list.role == role %>><%= role %></option>
+        <% end %>
+      </select>
+    </td>
+    <td data-role="status"></td>
+  </tr>
+<% end %>
+</table>
+<script type="text/javascript">
+  $("[data-role='list']").find("select").on("change", function() {
+    $.ajax({
+      url: $(this).data("url"),
+      data: { list: { role: $(this).attr("value") } },
+      type: 'PUT',
+      success: function(data, textStatus, jqXHR) { console.log("success", data, textStatus, jqXHR); },
+      error: function(jqXHR, textStatus, errorThrown) { console.log("error", jqXHR, textStatus, errorThrown); } 
+    });
+  });
+</script>

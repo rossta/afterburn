@@ -44,35 +44,35 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
     end
   end
 
-  describe "flow_role" do
+  describe "role" do
     it "can be 'backlog'" do
-      list.flow_role = 'backlog'
-      list.flow_role.should eq('backlog')
+      list.role = 'backlog'
+      list.role.should eq('backlog')
     end
 
     it "can be 'WIP'" do
-      list.flow_role = 'WIP'
-      list.flow_role.should eq('WIP')
+      list.role = 'WIP'
+      list.role.should eq('WIP')
     end
 
     it "can be 'deployed'" do
-      list.flow_role = 'deployed'
-      list.flow_role.should eq('deployed')
+      list.role = 'deployed'
+      list.role.should eq('deployed')
     end
 
     it "can be 'ignored'" do
-      list.flow_role = 'ignored'
-      list.flow_role.should eq('ignored')
+      list.role = 'ignored'
+      list.role.should eq('ignored')
     end
 
     it "raises an error if set to unknown role" do
-      lambda { list.flow_role = 'foobar' }.should raise_error(Afterburn::List::UnknownFlowRole)
+      lambda { list.role = 'foobar' }.should raise_error(Afterburn::List::UnknownFlowRole)
     end
 
     it "is persisted" do
-      list.flow_role = 'backlog'
+      list.role = 'backlog'
       new_list = Afterburn::List.new(list.id)
-      new_list.flow_role.should eq('backlog')
+      new_list.role.should eq('backlog')
     end
   end
 

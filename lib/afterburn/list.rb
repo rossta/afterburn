@@ -5,8 +5,8 @@ module Afterburn
     module FlowRole
       extend self
       VALID_ROLES = [
-        WIP         = 'WIP',      # work in progress
         BACKLOG     = 'backlog',
+        WIP         = 'WIP',      # work in progress
         DEPLOYED    = 'deployed',
         IGNORED     = 'ignored'
       ]
@@ -17,21 +17,25 @@ module Afterburn
     end
 
     wrap :list
-    value :flow_role_store
+    value :role_store
     set :historical_card_id_set
     set :metric_timestamp_list
+
+    def self.roles
+      FlowRole::VALID_ROLES
+    end
 
     def name
       trello_list.name
     end
 
-    def flow_role=(role)
+    def role=(role)
       raise UnknownFlowRole.new("Tried to set unrecognized '#{role}'") unless FlowRole.valid?(role)
-      flow_role_store.value = role
+      role_store.value = role
     end
 
-    def flow_role
-      flow_role_store.value
+    def role
+      role_store.value
     end
 
     def trello_cards
@@ -56,6 +60,12 @@ module Afterburn
 
     def card_counts_for_timestamps(timestamps)
       timestamps.map { |timestamp| ListMetric.new(self, timestamp).card_count.to_i }
+    end
+
+    def update_attributes(attributes)
+      attributes.each do |key, value|
+        send("#{key}=", value)
+      end
     end
 
   end

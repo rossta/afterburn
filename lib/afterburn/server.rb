@@ -52,12 +52,16 @@ module Afterburn
       def csrf_tag
         Rack::Csrf.csrf_tag(env)
       end
+
+      def csrt_metatag
+        Rack::Csrf.metatag(env)
+      end
     end
 
-    def show(page, layout = true)
+    def show(page, options = {})
       response["Cache-Control"] = "max-age=0, private, must-revalidate"
       begin
-        erb page.to_sym, {:layout => layout}
+        erb page.to_sym, options
       rescue Errno::ECONNREFUSED
         erb :error, {:layout => false}, :error => "Can't connect to Redis! (#{Resque.redis_id})"
       end
@@ -74,6 +78,16 @@ module Afterburn
     post "/members" do
       member_attrs = params[:member]
       raise Afterburn::Member.find(member_attrs[:name])
+    end
+
+    get "/projects/:id" do
+      show :project, locals: { project: Afterburn::Project.find(params[:id]) } 
+    end
+
+    put "/lists/:id" do
+      list = Afterburn::List.find(params[:id])
+      list.update_attributes(params[:list])
+      list.to_json
     end
   end
 end

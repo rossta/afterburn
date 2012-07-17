@@ -1,3 +1,4 @@
+require 'afterburn'
 require 'redis/objects'
 
 module Afterburn
@@ -15,6 +16,10 @@ module Afterburn
 
     def self.by_member(member)
       member.boards.map { |board| Project.new(board) }
+    end
+
+    def self.find(id)
+      new(Board.find(id))
     end
 
     def initialize(board)
@@ -45,6 +50,7 @@ module Afterburn
       end
     end
 
+    # TODO handle BoardIntervals not found
     def intervals
       @intervals ||= interval_set.members.map { |interval_id| BoardInterval.find(interval_id) }
     end
