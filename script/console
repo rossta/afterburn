@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require 'logger'
+require 'irb'
+
+$LOAD_PATH.unshift ::File.expand_path(::File.dirname(__FILE__) + '/../lib')
+require 'afterburn'
+
+config = ENV['AFTERBURNCONFIG'] || './lib/afterburn/server/config/setup.rb'
+load ::File.expand_path(config) if ::File.exists?(config)
+
+IRB.start

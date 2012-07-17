@@ -6,9 +6,8 @@ require 'afterburn/server'
 
 # Set the AFTERBURNCONFIG env variable if you've a `afterburn.rb` or similar
 # config file you want loaded on boot.
-if ENV['AFTERBURNCONFIG'] && ::File.exists?(::File.expand_path(ENV['AFTERBURNCONFIG']))
-  load ::File.expand_path(ENV['AFTERBURNCONFIG'])
-end
+config = ENV['AFTERBURNCONFIG'] || './lib/afterburn/server/config/setup.rb'
+load ::File.expand_path(config) if ::File.exists?(config)
 
 use Rack::ShowExceptions
 use Rack::Session::Cookie, :secret => "some unique secret string here"
