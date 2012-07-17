@@ -14,8 +14,6 @@ end
 dir = File.dirname(File.expand_path(__FILE__))
 
 at_exit do
-  next if $!
-
   pid = `ps -A -o pid,command | grep [r]edis-spec.conf`
   puts "Killing test redis server..."
   `rm -f #{dir}/dump.rdb`
@@ -23,5 +21,4 @@ at_exit do
 end
 
 puts "Starting redis for testing at localhost:9802..."
-`redis-server #{dir}/redis-spec.conf`
-Afterburn.redis = 'localhost:9802'
+`redis-server #{dir}/support/redis-spec.conf`

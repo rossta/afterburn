@@ -8,8 +8,7 @@ module Afterburn
     #   2. A 'hostname:port:db' String (to select the Redis db)
     #   3. A 'hostname:port/namespace' String (to set the Redis namespace)
     #   4. A Redis URL String 'redis://host:port'
-    #   5. An instance of `Redis`, `Redis::Client`, `Redis::DistRedis`,
-    #      or `Redis::Namespace`.
+    #   5. An instance of `Redis`, `Redis::Client`, `Redis::DistRedis`
     def redis=(server)
       case server
       when String
@@ -21,15 +20,11 @@ module Afterburn
           redis = Redis.new(:host => host, :port => port,
             :thread_safe => true, :db => db)
         end
-        namespace ||= :afterburn
 
-        @redis = Redis::Namespace.new(namespace, :redis => redis)
-      when Redis::Namespace
-        @redis = server
+        @redis = redis
       else
-        @redis = Redis::Namespace.new(:afterburn, :redis => server)
+        @redis = server
       end
-      Redis.current = @redis
 
       @redis
     end
