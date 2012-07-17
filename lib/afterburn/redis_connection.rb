@@ -1,4 +1,4 @@
-require 'redis/namespace'
+require 'redis'
 
 module Afterburn
   module RedisConnection
@@ -6,16 +6,14 @@ module Afterburn
     # Accepts:
     #   1. A 'hostname:port' String
     #   2. A 'hostname:port:db' String (to select the Redis db)
-    #   3. A 'hostname:port/namespace' String (to set the Redis namespace)
-    #   4. A Redis URL String 'redis://host:port'
-    #   5. An instance of `Redis`, `Redis::Client`, `Redis::DistRedis`
+    #   3. A Redis URL String 'redis://host:port'
+    #   4. An instance of `Redis`, `Redis::Client`, `Redis::DistRedis`
     def redis=(server)
       case server
       when String
         if server =~ /redis\:\/\//
           redis = Redis.connect(:url => server, :thread_safe => true)
         else
-          server, namespace = server.split('/', 2)
           host, port, db = server.split(':')
           redis = Redis.new(:host => host, :port => port,
             :thread_safe => true, :db => db)
