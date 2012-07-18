@@ -1,0 +1,53 @@
+Edit the Project
+<form action="<%= u "/projects", project.id %>" method="POST">
+  <%= csrf_tag %>
+  <input name="_method" value="PUT" type="hidden" />
+  <table>
+    <tr>
+      <td><label for="project_name">Name</label></td>
+      <td><input id="project_name" type="text" name="project[name]" value="<%= project.name %>" /></td>
+    </tr>
+    <tr>
+      <td><label for="project_enable">Enable?</label></td>
+      <td>
+        <input type="radio" name="project[enable]" value="1" <%= "checked" if project.enabled? %> /> Yes&nbsp;
+        <input type="radio" name="project[enable]" value="0" <%= "checked" if !project.enabled? %>/> No
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="Submit" value="Save" /></td>
+    </tr>
+  </table>
+</form>
+<table>
+Edit list roles:
+<% project.lists.each_with_index do |list, index| %>
+  <tr id="list_<%= list.id %>" data-role="list">
+    <%= csrf_tag %>
+    <td><%= list.name %></td>
+    <td><label for='list_role_<%= index %>'>Role</label></td>
+    <td>
+      <select id='list_role_<%= index %>' type='text' name='list[role]' data-url="/lists/<%= list.id %>">
+        <option>Choose a role</option>
+        <% Afterburn::List.roles.each do |role| %>
+          <option value="<%= role %>" <%= "selected" if list.role == role %>><%= role %></option>
+        <% end %>
+      </select>
+    </td>
+    <td data-role="status"></td>
+  </tr>
+<% end %>
+</table>
+<a href='/'>Done</a>
+<script type="text/javascript">
+  $("[data-role='list']").find("select").on("change", function() {
+    $.ajax({
+      url: $(this).data("url"),
+      data: { list: { role: $(this).attr("value") } },
+      type: 'PUT',
+      success: function(data, textStatus, jqXHR) { console.log("success", data, textStatus, jqXHR); },
+      error: function(jqXHR, textStatus, errorThrown) { console.log("error", jqXHR, textStatus, errorThrown); } 
+    });
+  });
+</script>

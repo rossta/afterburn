@@ -33,6 +33,10 @@ module Afterburn
         request.env['SCRIPT_NAME']
       end
 
+      def partial(template, local_vars = {})
+        erb(template.to_sym, {:layout => false}, local_vars)
+      end
+
       def afterburn
         Afterburn
       end
@@ -80,8 +84,14 @@ module Afterburn
       raise Afterburn::Member.find(member_attrs[:name])
     end
 
-    get "/projects/:id" do
-      show :project, locals: { project: Afterburn::Project.find(params[:id]) } 
+    get "/projects/:id/edit" do
+      show :edit_project, locals: { project: Afterburn::Project.find(params[:id]) } 
+    end
+
+    post "/projects/:id" do
+      puts params.inspect
+      Project.find(params[:id]).update_attributes(params[:project])
+      redirect "/"
     end
 
     put "/lists/:id" do

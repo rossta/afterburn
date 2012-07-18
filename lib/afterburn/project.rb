@@ -6,6 +6,7 @@ module Afterburn
     include Redis::Objects
 
     value :redis_name_value
+    value :enabled_value
     sorted_set :interval_set
 
     attr_reader :id
@@ -36,6 +37,22 @@ module Afterburn
 
     def name
       redis_name_value.value || @board.name
+    end
+
+    def enable!
+      enabled_value.value = "1"
+    end
+
+    def disable!
+      enabled_value.value = nil
+    end
+
+    def enable=(enabled)
+      enabled == "1" ? enable! : disable!
+    end
+
+    def enabled?
+      !!enabled_value.value
     end
 
     def lists
@@ -73,6 +90,13 @@ module Afterburn
         { "name" => list.name, "data" => list.card_counts_for_timestamps(interval_timestamps) }
       end     
     end
+
+    def update_attributes(attributes)
+      attributes.each do |key, value|
+        send("#{key}=", value)
+      end
+    end
+
 
   end
 end

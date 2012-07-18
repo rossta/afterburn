@@ -1,7 +1,7 @@
 <% current_projects.each do |project| %>
   <div id="project_<%= project.id %>"></div>
   <div>
-    <a href="/projects/<%= project.id %>">Edit</a>
+    <a href="/projects/<%= project.id %>/edit">Edit</a>
   </div>
 <% end %>
 <script type="text/javascript">
