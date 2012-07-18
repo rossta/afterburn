@@ -1,11 +1,21 @@
+<script id="afterburn" data-template-name='application' type="text/x-handlebars">
+  <div id="sidebar">
+    <h1>Feel the burn</h1>
+    {{outlet sidebar}}
+  </div>
+  <div id="project">
+    {{outlet}}
+  </div>
+</script>
+<script type="text/javascript">
+  $(function(){
+    Afterburn.setup(<%= current_projects.map(&:to_json).to_json %>);
+  });
+</script>
+
 <% current_projects.each do |project| %>
   <div id="project_<%= project.id %>"></div>
   <div>
     <a href="/projects/<%= project.id %>/edit">Edit</a>
   </div>
 <% end %>
-<script type="text/javascript">
-  $(function(){
-    Afterburn.setup(<%= current_projects.map(&:to_json).to_json %>);
-  });
-</script>
