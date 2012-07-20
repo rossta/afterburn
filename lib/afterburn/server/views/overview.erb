@@ -1,21 +1,34 @@
-<script id="afterburn" data-template-name='application' type="text/x-handlebars">
+<script data-template-name='application' type="text/x-handlebars">
   <div id="sidebar">
-    <h1>Feel the burn</h1>
+    <header><h2>Feel the burn</h2></header>
     {{outlet sidebar}}
   </div>
-  <div id="project">
+  <div id="content">
+    <header>Projects</header>
     {{outlet}}
   </div>
 </script>
-<script type="text/javascript">
-  $(function(){
-    Afterburn.setup(<%= current_projects.map(&:to_json).to_json %>);
-  });
+<script data-template-name='sidebar' type="text/x-handlebars">
+  list
+  <ul>
+    {{#each project in controller }}
+      <li><a {{ action showProject context="project" href=true }}>{{ project.name }}</a></li>
+    {{/each}}
+  </ul>
 </script>
 
-<% current_projects.each do |project| %>
-  <div id="project_<%= project.id %>"></div>
-  <div>
-    <a href="/projects/<%= project.id %>/edit">Edit</a>
-  </div>
-<% end %>
+<script data-template-name='projects' type="text/x-handlebars">
+  {{#each project in controller }}
+    <section>
+      <header>{{ project.name }}</header>
+      <p>{{ project.id }}</p>
+    </section>
+  {{/each}}
+</script>
+
+<script data-template-name='project' type="text/x-handlebars">
+  <section>
+    <header>{{ project.name }}</header>
+    <p>{{ project.id }}</p>
+  </section>
+</script>
