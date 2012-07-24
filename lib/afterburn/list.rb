@@ -24,6 +24,7 @@ module Afterburn
 
     wrap :list
     value :role_store
+    set :historical_card_id_set
     set :metric_timestamp_list
 
     def self.roles
@@ -31,11 +32,8 @@ module Afterburn
     end
 
     def self.factory(trello_list)
-      list = initialize_from_trello_object(trello_list)
-      if Role.historical?(list.role)
-        historical(list)
-      else
-        list
+      initialize_from_trello_object(trello_list).tap do |list|
+        list.extend(History) if Role.historical?(list.role)
       end
     end
 
@@ -64,7 +62,6 @@ module Afterburn
       trello_cards.count
     end
 
-    # TODO test
     def timestamp_count_vector(timestamps)
       ListMetric.timestamp_count_vector(self, timestamps)
     end
@@ -75,29 +72,27 @@ module Afterburn
       end
     end
 
-  end
+    module History
 
-  class HistoricalList < List
-    wrap :list
+      def card_count
+        update_card_history
+        historical_card_count  
+      end
 
-    set :historical_card_id_set
+      def historical_card_ids
+        historical_card_id_set.members
+      end
 
-    def card_count
-      update_card_history
-      historical_card_count  
-    end
+      def historical_card_count
+        historical_card_id_set.count
+      end
 
-    def historical_card_ids
-      historical_card_id_set.members
-    end
+      def update_card_history
+        trello_cards.map(&:id).each { |card_id| historical_card_id_set << card_id }
+      end
 
-    def historical_card_count
-      historical_card_id_set.count
-    end
-
-    def update_card_history
-      trello_cards.map(&:id).each { |card_id| historical_card_id_set << card_id }
     end
 
   end
+
 end

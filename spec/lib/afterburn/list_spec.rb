@@ -12,6 +12,26 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
 
   it { Afterburn::List.new(trello_list.id).id.should eq(trello_list.id) }
 
+  describe "self.factory" do
+    it "should return an afterburn list linked to a given trello_list" do
+      list = Afterburn::List.factory(trello_list)
+      list.should be_a(Afterburn::List)
+      list.trello_list.should eq(trello_list)
+    end
+
+    it "includes history behavior is role is historical" do
+      Afterburn::List::Role.should_receive(:historical?).and_return(true)
+      list = Afterburn::List.factory(trello_list)
+      list.respond_to?(:historical_card_ids).should be_true
+    end
+
+    it "does not include history behavior otherwise" do
+      Afterburn::List::Role.should_receive(:historical?).and_return(false)
+      list = Afterburn::List.factory(trello_list)
+      list.respond_to?(:historical_card_ids).should be_false
+    end
+  end
+
   describe "load" do
     it "fetches if trello list isn't stored" do
       list.should_receive(:fetch)
@@ -77,7 +97,9 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
   end
 
   describe "HistoricalList" do
-    let(:list) { Afterburn::HistoricalList.new(trello_list.id) }
+    before do
+      list.extend(Afterburn::List::History)
+    end
 
     describe "#historical_card_ids" do
       it "starts empty" do
@@ -98,7 +120,8 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
 
       it "is persisted" do
         list.update_card_history
-        new_list = Afterburn::HistoricalList.new(list.id)
+        new_list = Afterburn::List.new(list.id)
+        new_list.extend(Afterburn::List::History)
         new_list.historical_card_ids.should include(list.trello_cards.first.id)
       end
     end
