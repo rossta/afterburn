@@ -84,6 +84,10 @@ module Afterburn
       raise Afterburn::Member.find(member_attrs[:name])
     end
 
+    get "/projects" do
+      { "projects" => Afterburn::Project.by_member_name('rossta').map(&:to_json) }
+    end
+
     get "/projects/:id/edit" do
       show :edit_project, locals: { project: Afterburn::Project.find(params[:id]) } 
     end
