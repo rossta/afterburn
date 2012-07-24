@@ -1,8 +1,8 @@
 module Afterburn
   class List < TrelloObjectWrapper
 
-    class UnknownFlowRole < StandardError; end
-    module FlowRole
+    class UnknownRole < StandardError; end
+    module Role
       extend self
       VALID_ROLES = [
         BACKLOG     = 'backlog',
@@ -11,18 +11,36 @@ module Afterburn
         IGNORED     = 'ignored'
       ]
 
+      HISTORICAL = [BACKLOG, DEPLOYED]
+
       def valid?(role)
         VALID_ROLES.include?(role)
+      end
+
+      def historical?(role)
+        HISTORICAL.include?(role)
       end
     end
 
     wrap :list
     value :role_store
-    set :historical_card_id_set
     set :metric_timestamp_list
 
     def self.roles
-      FlowRole::VALID_ROLES
+      Role::VALID_ROLES
+    end
+
+    def self.factory(trello_list)
+      list = initialize_from_trello_object(trello_list)
+      if Role.historical?(list.role)
+        historical(list)
+      else
+        list
+      end
+    end
+
+    def self.historical(list)
+      HistoricalList.initialize_from_trello_object(list.trello_list)
     end
 
     def name
@@ -30,7 +48,7 @@ module Afterburn
     end
 
     def role=(role)
-      raise UnknownFlowRole.new("Tried to set unrecognized '#{role}'") unless FlowRole.valid?(role)
+      raise UnknownRole.new("Tried to set unrecognized '#{role}'") unless Role.valid?(role)
       role_store.value = role
     end
 
@@ -46,6 +64,29 @@ module Afterburn
       trello_cards.count
     end
 
+    # TODO test
+    def timestamp_count_vector(timestamps)
+      ListMetric.timestamp_count_vector(self, timestamps)
+    end
+
+    def update_attributes(attributes)
+      attributes.each do |key, value|
+        send("#{key}=", value)
+      end
+    end
+
+  end
+
+  class HistoricalList < List
+    wrap :list
+
+    set :historical_card_id_set
+
+    def card_count
+      update_card_history
+      historical_card_count  
+    end
+
     def historical_card_ids
       historical_card_id_set.members
     end
@@ -54,18 +95,8 @@ module Afterburn
       historical_card_id_set.count
     end
 
-    def update_historical_card_ids!
+    def update_card_history
       trello_cards.map(&:id).each { |card_id| historical_card_id_set << card_id }
-    end
-
-    def card_counts_for_timestamps(timestamps)
-      timestamps.map { |timestamp| ListMetric.new(self, timestamp).card_count.to_i }
-    end
-
-    def update_attributes(attributes)
-      attributes.each do |key, value|
-        send("#{key}=", value)
-      end
     end
 
   end

@@ -46,7 +46,7 @@ module Afterburn
       end
 
       def current_projects
-        Afterburn.current_projects
+        [Afterburn.current_projects.first]
       end
 
       def csrf_token

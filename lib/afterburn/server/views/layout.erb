@@ -24,13 +24,16 @@
     </ul>
   </div>
 
-<div id="main">
-  <%= yield %>
-</div>
+  <div id="sidebar">
+  </div>
 
-<div id="footer">
-  <p>Powered by <a href="https://github.com/rossta/afterburn">Afterburn</a> v<%= Afterburn::VERSION %></p>
-  <p>Connected to Redis on <%=Afterburn.redis.client.id%></p>
-</div>
+  <div id="main">
+    <%= yield %>
+  </div>
+
+  <div id="footer">
+    <p>Powered by <a href="https://github.com/rossta/afterburn">Afterburn</a> v<%= Afterburn::VERSION %></p>
+    <p>Connected to Redis on <%=Afterburn.redis.client.id%></p>
+  </div>
 </body>
 </html>

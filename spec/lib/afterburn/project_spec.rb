@@ -30,4 +30,10 @@ describe Afterburn::Project do
     end
   end
 
+  describe "interval_series" do
+    it "returns counts for deploy" do
+      
+    end
+  end
+
 end

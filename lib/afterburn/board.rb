@@ -7,7 +7,7 @@ module Afterburn
     end
 
     def lists
-      @lists ||= trello_lists.map { |trello_list| List.initialize_from_trello_object(trello_list) }
+      @lists ||= trello_lists.map { |trello_list| List.factory(trello_list) }
     end
 
     def trello_lists

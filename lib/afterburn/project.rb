@@ -23,6 +23,7 @@ module Afterburn
       new(Board.find(id))
     end
 
+    attr_reader :board
     def initialize(board)
       @board = board
     end
@@ -59,17 +60,17 @@ module Afterburn
       @board.lists
     end
 
+    # TODO test
     def record_interval
-      timestamp = Time.now
-      BoardInterval.new(@board, timestamp).tap do |interval|
-        interval.record!
+      Time.now.tap do |timestamp|
+        interval = BoardInterval.record(@board, timestamp)
         interval_set[interval.id] = timestamp.to_i
       end
     end
 
     # TODO handle BoardIntervals not found
     def intervals
-      @intervals ||= interval_set.members.map { |interval_id| BoardInterval.find(interval_id) }
+      @intervals ||= BoardInterval.find_all(interval_set.members)
     end
 
     def to_json
@@ -77,7 +78,7 @@ module Afterburn
         hash['id'] = id
         hash['name'] = name
         hash['categories'] = interval_timestamps.map(&:to_date)
-        hash['series'] = interval_series
+        hash['series'] = interval_series_json
       end
     end
 
@@ -85,10 +86,8 @@ module Afterburn
       intervals.map(&:timestamp)
     end
 
-    def interval_series
-      lists.map do |list|
-        { "name" => list.name, "data" => list.card_counts_for_timestamps(interval_timestamps) }
-      end     
+    def interval_series_json
+      ListIntervalSeries.new(lists, interval_timestamps).to_json
     end
 
     def update_attributes(attributes)
@@ -96,7 +95,6 @@ module Afterburn
         send("#{key}=", value)
       end
     end
-
 
   end
 end

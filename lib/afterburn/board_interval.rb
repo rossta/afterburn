@@ -12,6 +12,16 @@ module Afterburn
       new(Board.find(board_id), Time.at(timestamp_string.to_i))
     end
 
+    # TODO test
+    def self.find_all(ids)
+      ids.map { |interval_id| find(interval_id) }
+    end
+
+    # TODO test
+    def self.record(board, timestamp)
+      new(board, timestamp).tap { |board_interval| board_interval.record! }
+    end
+
     def initialize(board, timestamp = Time.now)
       @board = board
       @timestamp = timestamp
@@ -22,7 +32,7 @@ module Afterburn
     end
 
     def list_metrics
-      @list_metrics ||= @board.lists.map { |list| ListMetric.new(list, timestamp) }
+      @list_metrics ||= ListMetric.for_timestamp(@board.lists, timestamp)
     end
 
     def record!

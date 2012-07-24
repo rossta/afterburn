@@ -8,6 +8,7 @@ module Afterburn
   autoload :Member, "afterburn/member"
   autoload :List, "afterburn/list"
   autoload :ListMetric, "afterburn/list_metric"
+  autoload :ListIntervalSeries, "afterburn/list_interval_series"
   autoload :BoardInterval, "afterburn/board_interval"
   autoload :Project, "afterburn/project"
   autoload :Authorization, "afterburn/authorization"
