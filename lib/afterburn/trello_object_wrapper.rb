@@ -19,10 +19,12 @@ module Afterburn
     end
 
     def self.find(id)
+      return nil if id.nil?
       new(id).load
     end
 
     def self.fetch(id)
+      return nil if id.nil?
       new(id).fetch
     end
 
@@ -61,11 +63,13 @@ module Afterburn
     end
 
     def trello_object=(object)
+      return nil if object.nil?
       @id = object.id
       trello_object_store.value = object
     end
 
     def trello_object
+      return nil if id.nil?
       fetch if trello_object_store.value.nil?
       trello_object_store.value
     end

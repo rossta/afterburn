@@ -9,12 +9,12 @@ module Afterburn
 
     def self.find(id)
       board_id, timestamp_string = Base64.decode64(id).split(":")
+      return nil if board_id.nil?
       new(Board.find(board_id), Time.at(timestamp_string.to_i))
     end
 
-    # TODO test
     def self.find_all(ids)
-      ids.map { |interval_id| find(interval_id) }
+      ids.map { |interval_id| find(interval_id) }.compact
     end
 
     # TODO test
