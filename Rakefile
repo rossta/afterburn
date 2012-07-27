@@ -22,6 +22,8 @@ end
 
 Bundler::GemHelper.install_tasks
 
+load './lib/tasks/afterburn_tasks.rake'
+
 begin
   require 'rspec/core/rake_task'
 
