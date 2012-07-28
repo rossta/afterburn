@@ -25,7 +25,11 @@ module Afterburn
     @current_member ||= Afterburn::Member.first
   end
 
+  def current_members
+    Afterburn::Member.all
+  end
+
   def current_projects
-    Afterburn::Project.by_member(current_member)
+    current_members.map { |member| Afterburn::Project.by_member(member) }.flatten
   end
 end
