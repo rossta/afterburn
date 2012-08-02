@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Cumulative flow diagrams for your Trello boards"
   s.description = "Keep tabs on cycle time for completing your work in progress based on your Trello lists"
 
-  s.files = Dir["{app,config,db,lib,bin}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{lib,bin}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.executables << "burn"
 
   s.add_dependency "sinatra"
