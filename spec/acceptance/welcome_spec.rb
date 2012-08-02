@@ -24,6 +24,11 @@ feature 'Homepage', %q{
     click_link "Edit"
 
     page.should have_content("Edit the Project")
+
+    fill_in "Name", with: "ActIn"
+    click_button "Save"
+
+    page.should have_content("ActIn")
   end
 
 end
