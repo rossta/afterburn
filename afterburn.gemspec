@@ -9,11 +9,12 @@ Gem::Specification.new do |s|
   s.version     = Afterburn::VERSION
   s.authors     = ["Ross Kaffenberger"]
   s.email       = ["rosskaff@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Afterburn."
-  s.description = "TODO: Description of Afterburn."
+  s.homepage    = "https://github.com/rossta/afterburn"
+  s.summary     = "Cumulative flow diagrams for your Trello boards"
+  s.description = "Keep tabs on cycle time for completing your work in progress based on your Trello lists"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.executables = [ "burn" ]
 
   s.add_dependency "sinatra"
   s.add_dependency "redis-objects"
