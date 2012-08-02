@@ -32,6 +32,10 @@ module Afterburn
       member_id_set << member.id
     end
 
+    def self.clear
+      member_id_set.clear
+    end
+
     def boards
       trello_member.boards.map { |trello_board| Board.initialize_from_trello_object(trello_board) }
     end
