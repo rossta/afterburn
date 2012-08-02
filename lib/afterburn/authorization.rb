@@ -11,7 +11,7 @@ module Afterburn
 
     def configure
       yield self if block_given?
-      Trello::Authorization.const_set :AuthPolicy, OAuthPolicy
+      set_oauth_policy
       OAuthPolicy.consumer_credential = OAuthCredential.new trello_user_key, trello_user_secret
       OAuthPolicy.token = OAuthCredential.new trello_app_token, nil
       Afterburn::Member.add_member(member)
@@ -31,6 +31,16 @@ module Afterburn
 
     def member
       Afterburn::Member.find(@member_name)
+    end
+
+    private
+
+    def set_oauth_policy
+      Trello::Authorization.const_set :AuthPolicy, OAuthPolicy unless oauth_policy_set?
+    end
+
+    def oauth_policy_set?
+      Trello::Authorization::AuthPolicy == OAuthPolicy
     end
   end
 end

@@ -1,10 +1,6 @@
 require "spec_helper"
 
 describe Afterburn::BoardInterval do
-  def fetch_trello_board
-    Trello::Member.find('rossta').boards.first
-  end
-
   let(:trello_board) { fetch_trello_board }
   let(:board) { Afterburn::Board.new(trello_board.id) }
   let(:now) { Time.now }
@@ -20,12 +16,12 @@ describe Afterburn::BoardInterval do
 
   describe "self.find_all" do
     it "finds existing board for each ids" do
-      intervals = Afterburn::BoardInterval.find_all [interval.id]      
+      intervals = Afterburn::BoardInterval.find_all [interval.id]
       intervals.should eq([interval])
     end
 
     it "removes nils" do
-      intervals = Afterburn::BoardInterval.find_all ["abc", interval.id, "123"]   
+      intervals = Afterburn::BoardInterval.find_all ["abc", interval.id, "123"]
       intervals.should eq([interval])
     end
   end

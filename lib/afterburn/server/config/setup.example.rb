@@ -5,7 +5,7 @@
 # => https://trello.com/1/connect?key=PUBLIC_KEY_FROM_ABOVE&name=MyApp&response_type=token&scope=read,write,account&expiration=never
 # 3. Use the afterburn authorization block in an initializer file
 
-Afterburn.authorize 'rossta' do |auth|
+Afterburn.authorize 'tech' do |auth|
   auth.trello_user_key = "trello_user_key"
   auth.trello_user_secret = "trello_user_secret"
   auth.trello_app_token = "trello_app_token"

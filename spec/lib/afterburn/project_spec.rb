@@ -1,10 +1,6 @@
 require "spec_helper"
 
 describe Afterburn::Project do
-  def fetch_trello_board
-    Trello::Member.find('rossta').boards.first
-  end
-
   let(:trello_board) { fetch_trello_board }
   let(:board) { Afterburn::Board.new(trello_board.id) }
   let(:project) { Afterburn::Project.new(board) }
@@ -32,7 +28,7 @@ describe Afterburn::Project do
 
   describe "interval_series" do
     it "returns counts for deploy" do
-      
+
     end
   end
 

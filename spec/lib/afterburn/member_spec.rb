@@ -2,16 +2,6 @@ require 'spec_helper'
 require 'ostruct'
 
 describe Afterburn::Member, :vcr, :record => :new_episodes do
-  def fetch_trello_member
-    Trello::Member.find('rossta')
-  end
-
-  let(:trello_member) { fetch_trello_member }
-
-  def fetch_trello_member
-    Trello::Member.find('rossta').boards.first.members.first
-  end
-
   let(:trello_member) { fetch_trello_member }
   let(:member) { Afterburn::Member.new(trello_member.id) }
 

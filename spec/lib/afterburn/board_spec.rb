@@ -2,10 +2,6 @@ require 'spec_helper'
 require 'ostruct'
 
 describe Afterburn::Board, :vcr, :record => :new_episodes do
-  def fetch_trello_board
-    Trello::Member.find('rossta').boards.first
-  end
-
   let(:trello_board) { fetch_trello_board }
   let(:board) { Afterburn::Board.new(trello_board.id) }
 
@@ -13,19 +9,20 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
 
   describe "self.fetch_by_member" do
     it "should retrieve trello boards for given member" do
-      boards = Afterburn::Board.fetch_by_member('rossta')
+      boards = Afterburn::Board.fetch_by_member('tech1')
       board_names = boards.map(&:name)
       board_names.should include("Platform")
     end
 
     it "should initialize afterburn boards" do
-      boards = Afterburn::Board.fetch_by_member('rossta')
+      boards = Afterburn::Board.fetch_by_member('tech1')
       boards.first.should be_a(Afterburn::Board)
     end
   end
 
   describe "load" do
-    it "fetches if trello board isn't stored" do  
+    it "fetches if trello board isn't stored" do
+      board.trello_object_store.value = nil
       board.should_receive(:fetch)
       board.load
     end

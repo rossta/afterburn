@@ -32,8 +32,8 @@ module Afterburn
     end
 
     def self.factory(trello_list)
-      initialize_from_trello_object(trello_list).tap do |list|
-        list.extend(History) if Role.historical?(list.role)
+      initialize_from_trello_object(trello_list).tap do |_list|
+        _list.extend(History) if Role.historical?(_list.role)
       end
     end
 
@@ -76,7 +76,7 @@ module Afterburn
 
       def card_count
         update_card_history
-        historical_card_count  
+        historical_card_count
       end
 
       def historical_card_ids

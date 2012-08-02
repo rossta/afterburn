@@ -2,11 +2,6 @@ require 'spec_helper'
 require 'ostruct'
 
 describe Afterburn::List, :vcr, :record => :new_episodes do
-
-  def fetch_trello_list
-    Trello::Member.find('rossta').boards.first.lists.first
-  end
-
   let(:trello_list) { fetch_trello_list }
   let(:list) { Afterburn::List.new(trello_list.id) }
 
@@ -34,6 +29,7 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
 
   describe "load" do
     it "fetches if trello list isn't stored" do
+      list.trello_object_store.value = nil
       list.should_receive(:fetch)
       list.load
     end
