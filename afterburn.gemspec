@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Keep tabs on cycle time for completing your work in progress based on your Trello lists"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.executables = [ "burn" ]
+  s.executables << "burn"
 
   s.add_dependency "sinatra"
   s.add_dependency "redis-objects"
