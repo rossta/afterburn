@@ -1,11 +1,1 @@
-<% current_projects.each do |project| %>
-  <div id="project_<%= project.id %>"></div>
-  <div>
-    <a href="<%= u "projects", project.id, "edit" %>">Edit</a>
-  </div>
-<% end %>
-<script type="text/javascript">
-  $(function(){
-    Afterburn.setup(<%= current_projects.map(&:to_json).to_json %>);
-  });
-</script>
+  <%= partial :project if current_project %>

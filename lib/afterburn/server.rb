@@ -46,7 +46,11 @@ module Afterburn
       end
 
       def current_projects
-        [Afterburn.current_projects.first]
+        Afterburn.current_projects
+      end
+
+      def current_project
+        @current_project || current_projects.first
       end
 
       def csrf_token
@@ -86,6 +90,11 @@ module Afterburn
 
     get "/projects/:id/edit" do
       show :edit_project, locals: { project: Afterburn::Project.find(params[:id]) }
+    end
+
+    get "/projects/:id" do
+      @current_project = Afterburn::Project.find(params[:id])
+      show :project
     end
 
     post "/projects/:id" do

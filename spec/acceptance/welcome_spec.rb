@@ -1,7 +1,7 @@
 require 'acceptance/acceptance_helper'
 
 feature 'Homepage', %q{
-} do
+}, :vcr do
   before do
     authorize_account
   end
@@ -12,13 +12,17 @@ feature 'Homepage', %q{
     page.should have_content('Afterburn')
   end
 
-  scenario 'show project', :vcr do
+  scenario 'show project' do
     visit burn_path
+
+    within(".projects") do
+      click_link "ActOut"
+    end
 
     page.should have_content("ActOut")
   end
 
-  scenario 'edit project', :vcr do
+  scenario 'edit project' do
     visit burn_path
 
     click_link "Edit"

@@ -39,7 +39,7 @@ Edit list roles:
   </tr>
 <% end %>
 </table>
-<a href='/'>Done</a>
+<a href=<%= u('/') %>>Done</a>
 <script type="text/javascript">
   $("[data-role='list']").find("select").on("change", function() {
     $.ajax({
