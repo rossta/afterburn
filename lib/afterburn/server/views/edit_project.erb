@@ -28,7 +28,7 @@ Edit list roles:
     <td><%= list.name %></td>
     <td><label for='list_role_<%= index %>'>Role</label></td>
     <td>
-      <select id='list_role_<%= index %>' type='text' name='list[role]' data-url="/lists/<%= list.id %>">
+      <select id='list_role_<%= index %>' type='text' name='list[role]' data-url="<%= u 'lists', list.id %>">
         <option>Choose a role</option>
         <% Afterburn::List.roles.each do |role| %>
           <option value="<%= role %>" <%= "selected" if list.role == role %>><%= role %></option>

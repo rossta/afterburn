@@ -98,13 +98,11 @@ module Afterburn
     end
 
     post "/projects/:id" do
-      puts params.inspect
       Project.find(params[:id]).update_attributes(params[:project])
       redirect url_path("/")
     end
 
     put "/projects/:id" do
-      puts params.inspect
       Project.find(params[:id]).update_attributes(params[:project])
       redirect url_path("/")
     end

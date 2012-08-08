@@ -1,7 +1,6 @@
 require 'acceptance/acceptance_helper'
 
-feature 'Homepage', %q{
-}, :vcr do
+feature 'Web server', :vcr do
   before do
     authorize_account
   end
@@ -33,6 +32,20 @@ feature 'Homepage', %q{
     click_button "Save"
 
     page.should have_content("ActIn")
+  end
+
+  scenario 'edit lists', :js, record: :all do
+    visit burn_path
+
+    click_link "Edit"
+
+    within "tr[data-role='list']:first-child" do
+      select "WIP", from: "Role"
+    end
+
+    click_link "Done"
+
+    Afterburn.current_projects.first.lists.first.role.should eq("WIP")
   end
 
 end
