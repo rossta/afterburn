@@ -46,4 +46,11 @@ rescue LoadError
   end
 end
 
-task :default => :spec
+task :default do
+  IO.popen("/bin/bash", "w") do |shell|
+    shell.puts "source .env"
+    shell.puts "rake spec"
+  end
+end
+
+# task :default => [:development_env, :spec]

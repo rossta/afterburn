@@ -15,8 +15,8 @@ module Afterburn
     end
 
     def aggregate(lists, opts = {})
-      vectors = lists.map { |list| list.timestamp_count_vector(@timestamps) }
-      [{ "name" => opts[:name], "data" => vectors.inject(&:+).to_a }]
+      data = lists.map { |list| list.timestamp_count_vector(@timestamps) }.inject(&:+).to_a
+      [{ "name" => opts[:name], "data" => data }]
     end
 
     def map(lists)

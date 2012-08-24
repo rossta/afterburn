@@ -92,7 +92,7 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
     end
   end
 
-  describe "HistoricalList" do
+  describe "Historical List" do
     before do
       list.extend(Afterburn::List::History)
     end
