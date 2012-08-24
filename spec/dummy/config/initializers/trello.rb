@@ -1,7 +1,7 @@
-on_travis = ENV['TRAVIS']
-trello_env = ENV['TRELLO_USER_KEY'] && ENV['TRELLO_USER_SECRET']
+skip_trello_config  = ENV['TRAVIS']
+trello_configured   = ENV['TRELLO_USER_KEY'] && ENV['TRELLO_USER_SECRET']
 
-if !(on_travis && trello_env)
+if !(skip_trello_config || trello_configured)
 raise <<-WARNING
 
   Set up your trello key information. You can get this information at https://trello.com/1/appKey/generate
