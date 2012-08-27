@@ -21,5 +21,7 @@ RSpec.configure do |config|
   end
 end
 
-require 'capybara-webkit'
-Capybara.javascript_driver = :webkit
+# require 'capybara-webkit'
+# Capybara.javascript_driver = :webkit
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist

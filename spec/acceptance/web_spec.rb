@@ -26,7 +26,7 @@ feature 'Web server', :vcr do
 
     click_link "Edit"
 
-    page.should have_content("Edit the Project")
+    page.should have_content("Edit Project")
 
     fill_in "Name", with: "ActIn"
     click_button "Save"
