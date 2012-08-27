@@ -93,7 +93,9 @@ module Afterburn
     end
 
     get "/projects/:id" do
-      @current_project = Afterburn::Project.find(params[:id])
+      Bench.mark("GET /projects/:id") do
+        @current_project = Afterburn::Project.find(params[:id])
+      end
       show :project
     end
 

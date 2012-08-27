@@ -1,4 +1,7 @@
 <div id="sidebar">
+  <header>
+    <h5>Projects: <%= current_member.name %></h5>
+  </header>
   <ul class="projects">
     <% current_projects.each do |project| %>
       <li class="project_<%= project.id %>"><a href="<%= u "projects", project.id %>"><%= project.name %></a></li>

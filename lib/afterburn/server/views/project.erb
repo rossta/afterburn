@@ -1,10 +1,12 @@
-<%= current_project.name %>
+<header>
+  <h4><%= current_project.name %></h4>
+</header>
 <div id="project_<%= current_project.id %>"></div>
 <div>
   <a href="<%= u "projects", current_project.id, "edit" %>">Edit</a>
 </div>
 <script type="text/javascript">
   $(function(){
-    Afterburn.setup(<%= current_projects.map(&:to_json).to_json %>);
+    Afterburn.render(<%= current_project.to_json %>);
   });
 </script>

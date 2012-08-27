@@ -25,11 +25,22 @@ module Afterburn
     @current_member ||= Afterburn::Member.first
   end
 
+  def current_projects
+    Afterburn::Project.by_member(current_member)
+  end
+
   def current_members
     Afterburn::Member.all
   end
 
-  def current_projects
-    current_members.map { |member| Afterburn::Project.by_member(member) }.flatten
+  class Bench
+    def self.mark(msg, logger = Rails.logger)
+      start = Time.now
+      logger.info("#{start} --> starting #{msg} from #{caller[2]}:#{caller[1]}")
+      result = yield
+      finish = Time.now
+      logger.info("#{finish} --< finished #{msg} --- #{"%2.3f sec" % (finish - start)}")
+      result
+    end
   end
 end

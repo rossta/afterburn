@@ -79,7 +79,7 @@ module Afterburn
         hash['name'] = name
         hash['categories'] = interval_timestamps.map(&:to_date)
         hash['series'] = interval_series_json
-      end
+      end.to_json
     end
 
     def interval_timestamps
