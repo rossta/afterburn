@@ -20,3 +20,6 @@ RSpec.configure do |config|
     Afterburn.redis.flushall
   end
 end
+
+require 'capybara-webkit'
+Capybara.javascript_driver = :webkit

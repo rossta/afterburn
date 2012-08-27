@@ -18,7 +18,7 @@ WARNING
 end
 
 Afterburn.authorize ENV['TRELLO_USER_NAME'] do |auth|
-  auth.trello_user_key = ENV['TRELLO_USER_KEY']
-  auth.trello_user_secret = ENV['TRELLO_USER_SECRET']
-  auth.trello_app_token = ENV['TRELLO_APP_TOKEN']
+  auth.trello_user_key = ENV['TRELLO_USER_KEY'] || 'trello_user_key'
+  auth.trello_user_secret = ENV['TRELLO_USER_SECRET'] || 'trello_user_secret'
+  auth.trello_app_token = ENV['TRELLO_APP_TOKEN'] || 'trello_app_token'
 end

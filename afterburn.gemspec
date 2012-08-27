@@ -28,5 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "vcr"
   s.add_development_dependency "fakeweb"
   s.add_development_dependency "launchy"
+  s.add_development_dependency "capybara-webkit"
 
 end
