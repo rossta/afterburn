@@ -74,7 +74,7 @@ module Afterburn
         IGNORED     = 'ignored'
       ]
 
-      HISTORICAL = [BACKLOG, DEPLOYED]
+      HISTORICAL = [DEPLOYED]
 
       def valid?(role)
         VALID_ROLES.include?(role)

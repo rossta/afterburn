@@ -9,7 +9,7 @@ module Afterburn
 
     # deploy_list_counts + wip_list_counts + completed_list_counts
     def to_json
-      map(backlog_lists, :name => List::Role::BACKLOG) +
+      aggregate(backlog_lists, :name => List::Role::BACKLOG) +
       map(wip_lists) +
       aggregate(deployed_lists, :name => List::Role::DEPLOYED)
     end
