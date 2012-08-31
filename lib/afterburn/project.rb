@@ -3,7 +3,7 @@ require 'redis/objects'
 
 module Afterburn
   class Project
-    include Redis::Objects
+    include RedisObjects
 
     value :redis_name_value
     value :enabled_value

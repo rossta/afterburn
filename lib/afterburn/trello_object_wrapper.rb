@@ -7,7 +7,7 @@ module Afterburn
     include Helpers
 
     def self.inherited(base)
-      base.send :include, Redis::Objects
+      base.send :include, RedisObjects
       base.value :trello_object_store, :marshal => true
     end
 

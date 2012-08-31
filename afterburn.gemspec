@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.executables << "burn"
 
   s.add_dependency "sinatra"
+  s.add_dependency "redis-namespace"
   s.add_dependency "redis-objects"
   s.add_dependency "ruby-trello"
   s.add_dependency "rack_csrf"

@@ -3,7 +3,7 @@ require 'redis/objects'
 
 module Afterburn
   class BoardInterval
-    include Redis::Objects
+    include RedisObjects
 
     attr_reader :board, :timestamp
 

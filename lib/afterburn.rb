@@ -1,18 +1,19 @@
 require 'trello'
 
 module Afterburn
-  autoload :RedisConnection, "afterburn/redis_connection"
+  autoload :Authorization, "afterburn/authorization"
   autoload :Helpers, "afterburn/helpers"
-  autoload :TrelloObjectWrapper, "afterburn/trello_object_wrapper"
   autoload :Board, "afterburn/board"
-  autoload :Member, "afterburn/member"
+  autoload :BoardInterval, "afterburn/board_interval"
   autoload :List, "afterburn/list"
   autoload :ListMetric, "afterburn/list_metric"
   autoload :ListIntervalSeries, "afterburn/list_interval_series"
-  autoload :BoardInterval, "afterburn/board_interval"
+  autoload :Member, "afterburn/member"
   autoload :Project, "afterburn/project"
-  autoload :Authorization, "afterburn/authorization"
+  autoload :RedisConnection, "afterburn/redis_connection"
+  autoload :RedisObjects, "afterburn/redis_objects"
   autoload :Server, "afterburn/server"
+  autoload :TrelloObjectWrapper, "afterburn/trello_object_wrapper"
 
   extend RedisConnection
   extend self

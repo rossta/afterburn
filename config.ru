@@ -4,6 +4,8 @@ require 'logger'
 $LOAD_PATH.unshift ::File.expand_path(::File.dirname(__FILE__) + '/lib')
 require 'afterburn/server'
 
+Afterburn.redis = '127.0.0.1:6379/afterburn'
+
 # Set the AFTERBURNCONFIG env variable if you've a `afterburn.rb` or similar
 # config file you want loaded on boot.
 config = ENV['AFTERBURNCONFIG']

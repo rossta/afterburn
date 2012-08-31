@@ -1,10 +1,6 @@
 module Afterburn
   module Helpers
 
-    def redis
-      Afterburn.redis
-    end
-
     # Tries to find a constant with the name specified in the argument string:
     #
     # constantize("Module") # => Module
