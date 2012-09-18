@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Afterburn::ListIntervalSeries do
+describe Afterburn::ListAggregation do
   module ListSpecHelper
     def stub_backlog_list
       stub(Afterburn::List,
@@ -28,11 +28,11 @@ describe Afterburn::ListIntervalSeries do
   let(:lists) { [stub_backlog_list, stub_wip_list, stub_completed_list] }
   let(:timestamps) { [2.hours.ago, 1.hour.ago, Time.now] }
 
-  let(:series) { Afterburn::ListIntervalSeries.new(lists, timestamps) }
+  let(:aggregation) { Afterburn::ListAggregation.new(lists, timestamps) }
 
   describe "#aggregate" do
     it "returns data as sum timestamp vectors from given lists" do
-      series.aggregate(lists, :name => "test").should == [{
+      aggregation.aggregate(lists, :name => "test").should == [{
         "name" => "test",
         "data" => [3, 6, 9]
       }]
@@ -43,13 +43,13 @@ describe Afterburn::ListIntervalSeries do
         list.should_receive(:timestamp_count_vector).with(timestamps)
       end
 
-      series.aggregate(lists, :name => "test")
+      aggregation.aggregate(lists, :name => "test")
     end
   end
 
   describe "#map" do
     it "returns data map of timestamp vectors from given lists" do
-      series.map(lists).should == [
+      aggregation.map(lists).should == [
         {
           "name" => "backlog",
           "data" => [1, 2, 3]
@@ -70,7 +70,7 @@ describe Afterburn::ListIntervalSeries do
         list.should_receive(:timestamp_count_vector).with(timestamps)
       end
 
-      series.map(lists)
+      aggregation.map(lists)
     end
   end
 

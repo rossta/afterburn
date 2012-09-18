@@ -2,7 +2,7 @@ require 'matrix'
 
 # TODO test
 module Afterburn
-  class ListIntervalSeries
+  class ListAggregation
     def initialize(lists, timestamps)
       @lists, @timestamps = lists, timestamps
     end

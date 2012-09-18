@@ -61,11 +61,10 @@ module Afterburn
     end
 
     # TODO test
-    def record_interval
-      Time.now.tap do |timestamp|
-        interval = BoardInterval.record(@board, timestamp)
-        interval_set[interval.id] = timestamp.to_i
-      end
+    def record_interval(timestamp = Time.now)
+      interval = BoardInterval.record(@board, timestamp)
+      interval_set[interval.id] = timestamp.to_i
+      timestamp
     end
 
     # TODO handle BoardIntervals not found
@@ -78,7 +77,7 @@ module Afterburn
         hash['id'] = id
         hash['name'] = name
         hash['categories'] = interval_timestamps.map(&:to_date)
-        hash['series'] = interval_series_json
+        hash['series'] = series_aggregation_json
       end.to_json
     end
 
@@ -86,8 +85,8 @@ module Afterburn
       intervals.map(&:timestamp)
     end
 
-    def interval_series_json
-      ListIntervalSeries.new(lists, interval_timestamps).to_json
+    def series_aggregation_json
+      ListAggregation.new(lists, interval_timestamps).to_json
     end
 
     def update_attributes(attributes)

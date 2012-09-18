@@ -13,6 +13,7 @@ mount Afterburn::Server.new, :at => "/afterburn"
 ```
 ### TODOS
 
+* Better graph?
 * Display Lead Time (LT), where LT is the time that has passed between a given
 number of cards (features) in WIP take to reach be COMPLETED
 * Display Throughput, where throughput is the number of cards that reach
