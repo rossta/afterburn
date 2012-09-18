@@ -16,13 +16,28 @@ module Afterburn
 
     def aggregate(lists, opts = {})
       data = lists.map { |list| list.timestamp_count_vector(@timestamps) }.inject(&:+).to_a
-      [{ "name" => opts[:name], "data" => data }]
+      [
+        default_options.merge({
+          "name" => opts[:name],
+          "data" => data
+        })
+      ]
     end
 
     def map(lists, opts = {})
       lists.map do |list|
-        { "name" => opts[:name] || list.name, "data" => list.timestamp_count_vector(@timestamps).to_a }
+        default_options.merge({
+          "name" => opts[:name] || list.name,
+          "data" => list.timestamp_count_vector(@timestamps).to_a
+        })
       end
+    end
+
+    def default_options
+      {
+        "pointInterval" => one_day_in_milliseconds,
+        "pointStart" => start_milliseconds
+      }
     end
 
     def backlog_lists
@@ -35,6 +50,14 @@ module Afterburn
 
     def completed_lists
       @lists.select { |list| list.role == List::Role::COMPLETED }
+    end
+
+    def start_milliseconds
+      @timestamps.first.to_i * 1000
+    end
+
+    def one_day_in_milliseconds
+      24 * 3600 * 1000
     end
   end
 

@@ -32,10 +32,10 @@ describe Afterburn::ListAggregation do
 
   describe "#aggregate" do
     it "returns data as sum timestamp vectors from given lists" do
-      aggregation.aggregate(lists, :name => "test").should == [{
-        "name" => "test",
-        "data" => [3, 6, 9]
-      }]
+      vector = aggregation.aggregate(lists, :name => "test")
+      first = vector.first
+      first["name"].should eq("test")
+      first["data"].should eq([3, 6, 9])
     end
 
     it "retrieves timestamp_count_vectors from lists" do
@@ -49,20 +49,16 @@ describe Afterburn::ListAggregation do
 
   describe "#map" do
     it "returns data map of timestamp vectors from given lists" do
-      aggregation.map(lists).should == [
-        {
-          "name" => "backlog",
-          "data" => [1, 2, 3]
-        },
-        {
-          "name" => "wip",
-          "data" => [1, 2, 3]
-        },
-        {
-          "name" => "completed",
-          "data" => [1, 2, 3]
-        }
-      ]
+      vector = aggregation.map(lists)
+
+      vector[0]["name"].should eq("backlog")
+      vector[0]["data"].should eq([1,2,3])
+
+      vector[1]["name"].should eq("wip")
+      vector[1]["data"].should eq([1,2,3])
+
+      vector[2]["name"].should eq("completed")
+      vector[2]["data"].should eq([1,2,3])
     end
 
     it "retrieves timestamp_count_vectors from lists" do

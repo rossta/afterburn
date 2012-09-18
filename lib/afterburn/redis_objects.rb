@@ -7,6 +7,10 @@ module Afterburn
       Afterburn.redis
     end
 
+    def timestamp_for_interval(timestamp)
+      timestamp.send(Afterburn.timestamp_calculation_for_interval)
+    end
+
     def self.included(base)
       super
       base.send :include, Redis::Objects

@@ -6,7 +6,7 @@ module Afterburn
   class ListMetric
     include RedisObjects
 
-    attr_reader :timestamp
+    attr_reader :list, :timestamp
     counter :card_count
 
     def self.for_timestamp(lists, timestamp)
@@ -24,7 +24,7 @@ module Afterburn
 
     def initialize(list, timestamp = Time.now)
       @list = list
-      @timestamp = timestamp
+      @timestamp = timestamp_for_interval(timestamp)
     end
 
     def id
@@ -32,7 +32,7 @@ module Afterburn
     end
 
     def count!
-      card_count.incr(@list.card_count)
+      card_count.reset(@list.card_count)
     end
 
   end

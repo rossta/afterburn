@@ -76,7 +76,7 @@ module Afterburn
       {}.tap do |hash|
         hash['id'] = id
         hash['name'] = name
-        hash['categories'] = interval_timestamps.map(&:to_date)
+        hash['categories'] = interval_timestamps.map(&:to_date)  # not needed?
         hash['series'] = series_aggregation_json
       end.to_json
     end

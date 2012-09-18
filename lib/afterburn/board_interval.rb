@@ -24,7 +24,7 @@ module Afterburn
 
     def initialize(board, timestamp = Time.now)
       @board = board
-      @timestamp = timestamp
+      @timestamp = timestamp_for_interval(timestamp)
     end
 
     def id

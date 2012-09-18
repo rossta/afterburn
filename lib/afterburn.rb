@@ -34,6 +34,18 @@ module Afterburn
     Afterburn::Member.all
   end
 
+  # TODO make configurable along with
+  # other ActiveSupport time calculations, e.g.
+  # beginning_of_day
+  # beginning_of_week
+  # beginning_of_month
+  # end_of_day
+  # end_of_week
+  # end_of_month
+  def timestamp_calculation_for_interval
+    :end_of_day
+  end
+
   class Bench
     def self.mark(msg, logger = Rails.logger)
       start = Time.now
