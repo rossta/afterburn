@@ -11,7 +11,7 @@ module Afterburn
     def to_json
       aggregate(backlog_lists, :name => List::Role::BACKLOG) +
       map(wip_lists) +
-      aggregate(deployed_lists, :name => List::Role::DEPLOYED)
+      aggregate(completed_lists, :name => List::Role::COMPLETED)
     end
 
     def aggregate(lists, opts = {})
@@ -21,7 +21,7 @@ module Afterburn
 
     def map(lists, opts = {})
       lists.map do |list|
-        { "name" => opts[:name] || list.name, "data" => list.timestamp_count_vector(@timestamps).to_a } 
+        { "name" => opts[:name] || list.name, "data" => list.timestamp_count_vector(@timestamps).to_a }
       end
     end
 
@@ -33,8 +33,8 @@ module Afterburn
       @lists.select { |list| list.role == List::Role::WIP }
     end
 
-    def deployed_lists
-      @lists.select { |list| list.role == List::Role::DEPLOYED }
+    def completed_lists
+      @lists.select { |list| list.role == List::Role::COMPLETED }
     end
   end
 

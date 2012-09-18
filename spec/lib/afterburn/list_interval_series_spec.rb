@@ -3,29 +3,29 @@ require 'spec_helper'
 describe Afterburn::ListIntervalSeries do
   module ListSpecHelper
     def stub_backlog_list
-      stub(Afterburn::List, 
-        role: Afterburn::List::Role::BACKLOG, 
+      stub(Afterburn::List,
+        role: Afterburn::List::Role::BACKLOG,
         name: "backlog",
         :timestamp_count_vector => Vector[1, 2, 3])
     end
 
     def stub_wip_list
-      stub(Afterburn::List, 
-        role: Afterburn::List::Role::WIP, 
+      stub(Afterburn::List,
+        role: Afterburn::List::Role::WIP,
         name: "wip",
         :timestamp_count_vector => Vector[1, 2, 3])
     end
 
-    def stub_deployed_list
-      stub(Afterburn::List, role: 
-        Afterburn::List::Role::DEPLOYED, 
-        name: "deployed",
+    def stub_completed_list
+      stub(Afterburn::List, role:
+        Afterburn::List::Role::COMPLETED,
+        name: "completed",
         :timestamp_count_vector => Vector[1, 2, 3])
     end
   end
   include ListSpecHelper
 
-  let(:lists) { [stub_backlog_list, stub_wip_list, stub_deployed_list] }
+  let(:lists) { [stub_backlog_list, stub_wip_list, stub_completed_list] }
   let(:timestamps) { [2.hours.ago, 1.hour.ago, Time.now] }
 
   let(:series) { Afterburn::ListIntervalSeries.new(lists, timestamps) }
@@ -59,7 +59,7 @@ describe Afterburn::ListIntervalSeries do
           "data" => [1, 2, 3]
         },
         {
-          "name" => "deployed",
+          "name" => "completed",
           "data" => [1, 2, 3]
         }
       ]

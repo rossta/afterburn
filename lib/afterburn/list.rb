@@ -70,11 +70,11 @@ module Afterburn
       VALID_ROLES = [
         BACKLOG     = 'backlog',
         WIP         = 'WIP',      # work in progress
-        DEPLOYED    = 'deployed',
+        COMPLETED    = 'completed',
         IGNORED     = 'ignored'
       ]
 
-      HISTORICAL = [DEPLOYED]
+      HISTORICAL = [COMPLETED]
 
       def valid?(role)
         VALID_ROLES.include?(role)

@@ -71,9 +71,9 @@ describe Afterburn::List, :vcr, :record => :new_episodes do
       list.role.should eq('WIP')
     end
 
-    it "can be 'deployed'" do
-      list.role = 'deployed'
-      list.role.should eq('deployed')
+    it "can be 'completed'" do
+      list.role = 'completed'
+      list.role.should eq('completed')
     end
 
     it "can be 'ignored'" do
