@@ -17,7 +17,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before(:each) do
-    Afterburn.redis.flushall
+    Afterburn.flush_redis
   end
 end
 

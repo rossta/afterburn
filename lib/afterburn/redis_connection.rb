@@ -40,8 +40,8 @@ module Afterburn
       self.redis
     end
 
-    def redis_flush
-      redis.keys("#{redis_namespace}:*").each{ |namespace_key| redis.del(namespace_key) }
+    def flush_redis
+      redis.keys.each { |key| redis.del(key) }
     end
 
   end
