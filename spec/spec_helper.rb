@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
+ENV["AFTERBURN_REDIS_URL"] ||= 'localhost:9802'
 
 require 'redis_spec_server'
 
@@ -8,6 +9,8 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
+
+puts Afterburn.redis.inspect
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
