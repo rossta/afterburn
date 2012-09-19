@@ -1,15 +1,7 @@
 development:
-  adapter: mysql2
-  database: afterburn_development
-  username: root
-  pool: 5
-  timeout: 5000
-  reconnect: true
+  adapter: sqlite3
+  database: db/develoment.db
 
 test:
-  adapter: mysql2
-  database: afterburn_test
-  username: root
-  pool: 5
-  timeout: 5000
-  reconnect: true
+  adapter: sqlite3
+  database: db/test.db
