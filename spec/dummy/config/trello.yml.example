@@ -1,0 +1,8 @@
+development: &default
+  user_name: enter_your_user_name
+  user_key: enter_your_user_key
+  user_secret: enter_your_user_secret
+  app_token: enter_your_app_token
+
+test:
+  <<: *default

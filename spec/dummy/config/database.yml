@@ -1,7 +1,7 @@
 development:
   adapter: sqlite3
-  database: db/develoment.db
+  database: db/development.sqlite3
 
 test:
   adapter: sqlite3
-  database: db/test.db
+  database: db/test.sqlite3
