@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Afterburn::BoardInterval do
+describe Afterburn::BoardInterval, :vcr, :record => :new_episodes do
   let(:trello_board) { fetch_trello_board }
   let(:board) { Afterburn::Board.new(trello_board.id) }
   let(:now) { Time.now }

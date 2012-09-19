@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Afterburn::ListMetric do
+describe Afterburn::ListMetric, :vcr, :record => :new_episodes do
   let(:trello_list) { fetch_trello_list }
   let(:list) { Afterburn::List.new(trello_list.id) }
 

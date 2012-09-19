@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Afterburn::Project do
+describe Afterburn::Project, :vcr, :record => :new_episodes do
   let(:trello_board) { fetch_trello_board }
   let(:board) { Afterburn::Board.new(trello_board.id) }
   let(:project) { Afterburn::Project.new(board) }
