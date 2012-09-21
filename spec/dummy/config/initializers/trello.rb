@@ -25,6 +25,8 @@ unless skip_trello_config
   end
 end
 
+puts "TRELLO CONFIGURED: #{!!ENV['TRELLO_USER_NAME']}"
+
 Afterburn.authorize ENV['TRELLO_USER_NAME'] do |auth|
   auth.trello_user_key = ENV['TRELLO_USER_KEY'] || 'trello_user_key'
   auth.trello_user_secret = ENV['TRELLO_USER_SECRET'] || 'trello_user_secret'
