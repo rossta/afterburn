@@ -7,11 +7,8 @@ module Afterburn
       @lists, @timestamps = lists, timestamps
     end
 
-    # deploy_list_counts + wip_list_counts + completed_list_counts
     def to_json
-      aggregate(backlog_lists, :name => List::Role::BACKLOG) +
-      map(wip_lists) +
-      aggregate(completed_lists, :name => List::Role::COMPLETED)
+      raise "implement in subclass"
     end
 
     def aggregate(lists, opts = {})
@@ -23,6 +20,7 @@ module Afterburn
         })
       ]
     end
+    alias :sum :aggregate
 
     def map(lists, opts = {})
       lists.map do |list|

@@ -9,13 +9,13 @@ Afterburn is tool for tracking progress of Trello projects.
 You can mount Afterburn on a subpath in your existing Rails 3 app adding this to routes.rb:
 
 ```ruby
-mount Afterburn::Server.new, :at => "/afterburn"
+mount Afterburn::Server => "/afterburn"
 ```
 ### TODOS
 
 * Better graph?
 * Display Lead Time (LT), where LT is the time that has passed between a given
-number of cards (features) in WIP take to reach be COMPLETED
+number of cards (features) in WIP take to reach COMPLETED
 * Display Throughput, where throughput is the number of cards that reach
 COMPLETED within the given internal
 * Display Cycle Time (CT), where CT is the amount of time it take to complete a

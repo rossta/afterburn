@@ -72,21 +72,12 @@ module Afterburn
       @intervals ||= BoardInterval.find_all(interval_set.members)
     end
 
-    def to_json
-      {}.tap do |hash|
-        hash['id'] = id
-        hash['name'] = name
-        hash['categories'] = interval_timestamps.map(&:to_date)  # not needed?
-        hash['series'] = series_aggregation_json
-      end.to_json
-    end
-
     def interval_timestamps
       intervals.map(&:timestamp)
     end
 
-    def series_aggregation_json
-      ListAggregation.new(lists, interval_timestamps).to_json
+    def cumulative_flow_diagram
+      CumulativeFlowDiagram.new(self)
     end
 
     def update_attributes(attributes)

@@ -1,12 +1,10 @@
 <header>
   <h4><%= current_project.name %></h4>
+  <a href="<%= u "projects", current_project.id, "edit" %>">Edit</a>
 </header>
 <div id="project_<%= current_project.id %>"></div>
-<div>
-  <a href="<%= u "projects", current_project.id, "edit" %>">Edit</a>
-</div>
 <script type="text/javascript">
   $(function(){
-    Afterburn.render(<%= current_project.to_json %>);
+    Afterburn.render(<%= current_project.cumulative_flow_diagram.to_json %>);
   });
 </script>

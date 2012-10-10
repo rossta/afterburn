@@ -5,6 +5,7 @@ module Afterburn
   autoload :Helpers, "afterburn/helpers"
   autoload :Board, "afterburn/board"
   autoload :BoardInterval, "afterburn/board_interval"
+  autoload :CumulativeFlowDiagram, "afterburn/cumulative_flow_diagram"
   autoload :List, "afterburn/list"
   autoload :ListMetric, "afterburn/list_metric"
   autoload :ListAggregation, "afterburn/list_aggregation"
