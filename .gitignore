@@ -3,6 +3,7 @@ log/*.log
 pkg/
 spec/dummy/config/trello.yml
 spec/dummy/db/*.sqlite3
+spec/dummy/db/*.db
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/.sass-cache

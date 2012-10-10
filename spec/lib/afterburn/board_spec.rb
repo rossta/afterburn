@@ -11,7 +11,7 @@ describe Afterburn::Board, :vcr, :record => :new_episodes do
     it "should retrieve trello boards for given member" do
       boards = Afterburn::Board.fetch_by_member('tech1')
       board_names = boards.map(&:name)
-      board_names.should include("Platform")
+      board_names.should include("Challenges/Platform")
     end
 
     it "should initialize afterburn boards" do
