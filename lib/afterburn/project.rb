@@ -60,6 +60,18 @@ module Afterburn
       @board.lists
     end
 
+    def backlog_lists
+      lists.select { |list| list.role == List::Role::BACKLOG }
+    end
+
+    def wip_lists
+      lists.select { |list| list.role == List::Role::WIP }
+    end
+
+    def completed_lists
+      lists.select { |list| list.role == List::Role::COMPLETED }
+    end
+
     # TODO test
     def record_interval(timestamp = Time.now)
       interval = BoardInterval.record(@board, timestamp)

@@ -1,20 +1,13 @@
 require 'matrix'
 
-# TODO test
 module Afterburn
-  class ListAggregation
-    def initialize(lists, timestamps)
-      @lists, @timestamps = lists, timestamps
-    end
+  module ListAggregation
+    # expects #lists and #timestamps methods   
 
-    def to_json
-      raise "implement in subclass"
-    end
-
-    def aggregate(lists, opts = {})
-      data = lists.map { |list| list.timestamp_count_vector(@timestamps) }.inject(&:+).to_a
+    def aggregate(lists, timestamps, opts = {})
+      data = lists.map { |list| list.timestamp_count_vector(timestamps) }.inject(&:+).to_a
       [
-        default_options.merge({
+        default_options(timestamps.first).merge({
           "name" => opts[:name],
           "data" => data
         })
@@ -22,41 +15,30 @@ module Afterburn
     end
     alias :sum :aggregate
 
-    def map(lists, opts = {})
+    def map(lists, timestamps, opts = {})
       lists.map do |list|
-        default_options.merge({
+        default_options(timestamps.first).merge({
           "name" => opts[:name] || list.name,
-          "data" => list.timestamp_count_vector(@timestamps).to_a
+          "data" => list.timestamp_count_vector(timestamps).to_a
         })
       end
     end
 
-    def default_options
+    def default_options(start_time)
       {
         "pointInterval" => one_day_in_milliseconds,
-        "pointStart" => start_milliseconds
+        "pointStart" => start_milliseconds(start_time)
       }
     end
 
-    def backlog_lists
-      @lists.select { |list| list.role == List::Role::BACKLOG }
-    end
-
-    def wip_lists
-      @lists.select { |list| list.role == List::Role::WIP }
-    end
-
-    def completed_lists
-      @lists.select { |list| list.role == List::Role::COMPLETED }
-    end
-
-    def start_milliseconds
-      @timestamps.first.to_i * 1000
+    def start_milliseconds(start_time)
+      start_time.to_i * 1000
     end
 
     def one_day_in_milliseconds
       24 * 3600 * 1000
     end
+
   end
 
 end

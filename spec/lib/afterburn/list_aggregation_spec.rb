@@ -25,14 +25,18 @@ describe Afterburn::ListAggregation do
   end
   include ListSpecHelper
 
+  class ListDiagram
+    include Afterburn::ListAggregation
+  end
+
   let(:lists) { [stub_backlog_list, stub_wip_list, stub_completed_list] }
   let(:timestamps) { [2.hours.ago, 1.hour.ago, Time.now] }
 
-  let(:aggregation) { Afterburn::ListAggregation.new(lists, timestamps) }
+  let(:aggregator) { ListDiagram.new }
 
   describe "#aggregate" do
     it "returns data as sum timestamp vectors from given lists" do
-      vector = aggregation.aggregate(lists, :name => "test")
+      vector = aggregator.aggregate(lists, timestamps, :name => "test")
       first = vector.first
       first["name"].should eq("test")
       first["data"].should eq([3, 6, 9])
@@ -43,13 +47,13 @@ describe Afterburn::ListAggregation do
         list.should_receive(:timestamp_count_vector).with(timestamps)
       end
 
-      aggregation.aggregate(lists, :name => "test")
+      aggregator.aggregate(lists, timestamps, :name => "test")
     end
   end
 
   describe "#map" do
     it "returns data map of timestamp vectors from given lists" do
-      vector = aggregation.map(lists)
+      vector = aggregator.map(lists, timestamps)
 
       vector[0]["name"].should eq("backlog")
       vector[0]["data"].should eq([1,2,3])
@@ -66,7 +70,7 @@ describe Afterburn::ListAggregation do
         list.should_receive(:timestamp_count_vector).with(timestamps)
       end
 
-      aggregation.map(lists)
+      aggregator.map(lists, timestamps)
     end
   end
 

@@ -1,9 +1,11 @@
 module Afterburn
   class CumulativeFlowDiagram
-    attr_reader :project
+    include ListAggregation
 
+    attr_reader :project
+    
     def initialize(project)
-      @project = project  
+      @project = project
     end
 
     def to_json
@@ -16,13 +18,13 @@ module Afterburn
     end
 
     def cumulative_flow_list_aggregation_json
-      aggregation.sum(aggregation.backlog_lists, :name => List::Role::BACKLOG) +
-      aggregation.map(aggregation.wip_lists) +
-      aggregation.sum(aggregation.completed_lists, :name => List::Role::COMPLETED)
+      sum(project.backlog_lists, timestamps, :name => List::Role::BACKLOG) +
+      map(project.wip_lists, timestamps) +
+      sum(project.completed_lists, timestamps, :name => List::Role::COMPLETED)
     end
 
-    def aggregation
-      @aggregation ||= ListAggregation.new(project.lists, project.interval_timestamps)
+    def timestamps
+      project.interval_timestamps
     end
 
   end
