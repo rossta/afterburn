@@ -7,7 +7,7 @@ module Afterburn
   autoload :Diagram, "afterburn/diagram"
   autoload :Helpers, "afterburn/helpers"
   autoload :List, "afterburn/list"
-  autoload :ListMetric, "afterburn/list_metric"
+  autoload :ListInterval, "afterburn/list_interval"
   autoload :ListAggregation, "afterburn/list_aggregation"
   autoload :Member, "afterburn/member"
   autoload :Project, "afterburn/project"

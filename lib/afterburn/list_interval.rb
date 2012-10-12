@@ -3,7 +3,7 @@ require 'matrix'
 require 'redis/objects'
 
 module Afterburn
-  class ListMetric
+  class ListInterval
     include RedisObjects
 
     attr_reader :list, :timestamp

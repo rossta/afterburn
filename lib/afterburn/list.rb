@@ -42,7 +42,7 @@ module Afterburn
     end
 
     def timestamp_count_vector(timestamps)
-      ListMetric.timestamp_count_vector(self, timestamps)
+      ListInterval.timestamp_count_vector(self, timestamps)
     end
 
     module History

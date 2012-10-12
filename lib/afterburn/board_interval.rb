@@ -31,12 +31,13 @@ module Afterburn
       @id ||= Base64.encode64("#{@board.id}:#{@timestamp.to_i}")
     end
 
-    def list_metrics
-      @list_metrics ||= ListMetric.for_timestamp(@board.lists, timestamp)
+    def list_intervals
+      @list_intervals ||= ListInterval.for_timestamp(@board.lists, timestamp)
     end
 
     def record!
-      list_metrics.map(&:count!)
+      list_intervals.map(&:count!)
+      # record lead time
     end
 
     def ==(other)
