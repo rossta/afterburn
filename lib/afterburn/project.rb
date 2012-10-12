@@ -89,7 +89,11 @@ module Afterburn
     end
 
     def cumulative_flow_diagram
-      CumulativeFlowDiagram.new(self)
+      Diagram::CumulativeFlow.new(self)
+    end
+
+    def work_in_progress_diagram
+      Diagram::WorkInProgress.new(self)
     end
 
     def update_attributes(attributes)

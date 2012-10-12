@@ -2,7 +2,6 @@ require 'matrix'
 
 module Afterburn
   module ListAggregation
-    # expects #lists and #timestamps methods   
 
     def aggregate(lists, timestamps, opts = {})
       data = lists.map { |list| list.timestamp_count_vector(timestamps) }.inject(&:+).to_a
