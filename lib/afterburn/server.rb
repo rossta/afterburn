@@ -64,6 +64,10 @@ module Afterburn
       def csrt_metatag
         Rack::Csrf.metatag(env)
       end
+
+      def diagram
+        params[:diagram] || 'cumulative-flow'
+      end
     end
 
     def show(page, options = {})
@@ -114,5 +118,12 @@ module Afterburn
       list.update_attributes(params[:list])
       list.to_json
     end
+
+    get "/projects/:id/:diagram" do
+      raise Sinatra::NotFound unless %w( lead-time cycle-time throughput ).include? params[:diagram]
+      @current_project = Afterburn::Project.find(params[:id])
+      show :project
+    end
+
   end
 end

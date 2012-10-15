@@ -1,10 +1,11 @@
 <header>
+  <a class="right" href="<%= u "projects", current_project.id, "edit" %>">Edit</a>
   <h4><%= current_project.name %></h4>
-  <a href="<%= u "projects", current_project.id, "edit" %>">Edit</a>
 </header>
+<%= partial :subnav %>
 <div id="project_<%= current_project.id %>"></div>
 <script type="text/javascript">
   $(function(){
-    Afterburn.render(<%= current_project.cumulative_flow_diagram.to_json %>);
+    Afterburn.render(<%= current_project.diagram(:type => diagram).to_json %>);
   });
 </script>

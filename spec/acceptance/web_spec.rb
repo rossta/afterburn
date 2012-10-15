@@ -1,6 +1,6 @@
 require 'acceptance/acceptance_helper'
 
-feature 'Web server', :vcr do
+feature 'Web server', :vcr, :record => :new_episodes do
   before do
     authorize_account
   end
@@ -14,7 +14,7 @@ feature 'Web server', :vcr do
   scenario 'show project' do
     visit burn_path
 
-    within(".projects") do
+    within("ul.projects") do
       click_link "ActOut"
     end
 

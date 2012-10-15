@@ -4,20 +4,14 @@ module Afterburn
   module Diagram
     class CumulativeFlow < Series
 
+      def param
+        'cumulative-flow'
+      end
+
       def series
-        sum(project.backlog_lists, timestamps, :name => List::Role::BACKLOG) +
-        map(project.wip_lists, timestamps) +
-        sum(project.completed_lists, timestamps, :name => List::Role::COMPLETED)
-      end
-
-      def wip_series
-        sum(project.wip_lists, timestamps)
-      end
-
-      # For each timestamp, find the time difference such that:
-      # total completed (current) = total wip + completed (past)
-      def lead_time_series
-        
+        sum(backlog_lists, timestamps, :name => List::Role::BACKLOG) +
+        map(wip_lists, timestamps) +
+        sum(completed_lists, timestamps, :name => List::Role::COMPLETED)
       end
 
     end

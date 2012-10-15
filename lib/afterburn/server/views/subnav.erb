@@ -1,0 +1,14 @@
+<dl class="sub-nav">
+  <dd class="<%= 'active' if diagram == 'cumulative-flow' %>">
+    <a href="<%= u "projects", current_project.id %>">Cumulative Flow</a>
+  </dd>
+  <dd class="<%= 'active' if diagram == 'lead-time' %>">
+    <a href="<%= u "projects", current_project.id, 'lead-time' %>">Lead Time</a>
+  </dd>
+  <dd class="<%= 'active' if diagram == 'cycle-time' %>">
+    <a href="<%= u "projects", current_project.id, 'cycle-time' %>">Cycle Time</a>
+  </dd>
+  <dd class="<%= 'active' if diagram == 'throughput' %>">
+    <a href="<%= u "projects", current_project.id, 'throughput' %>">Throughput</a>
+  </dd>
+</dl> 

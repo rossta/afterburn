@@ -88,12 +88,8 @@ module Afterburn
       intervals.map(&:timestamp)
     end
 
-    def cumulative_flow_diagram
-      Diagram::CumulativeFlow.new(self)
-    end
-
-    def work_in_progress_diagram
-      Diagram::WorkInProgress.new(self)
+    def diagram(opts = {})
+      Diagram.build(self, opts)
     end
 
     def update_attributes(attributes)

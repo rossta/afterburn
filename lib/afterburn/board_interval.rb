@@ -7,6 +7,9 @@ module Afterburn
 
     attr_reader :board, :timestamp
 
+    counter :lead_time
+    counter :work_in_progress
+
     def self.find(id)
       board_id, timestamp_string = Base64.decode64(id).split(":")
       return nil if board_id.nil?
@@ -38,7 +41,12 @@ module Afterburn
     def record!
       list_intervals.map(&:count!)
       # record lead time
+      # record total work in progress
     end
+
+    # def arrival_rate
+    #   work_in_progress / lead_time
+    # end
 
     def ==(other)
       self.class == other.class && !other.id.nil? && self.id == other.id

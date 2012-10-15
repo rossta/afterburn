@@ -1,4 +1,5 @@
 skip_trello_config  = ENV['TRAVIS']
+
 unless skip_trello_config
   trello_config = File.exists?('./config/trello.yml') ? YAML.load_file('./config/trello.yml')[Rails.env] : {}
   ENV['TRELLO_USER_NAME'] ||= trello_config["user_name"]
@@ -23,12 +24,13 @@ unless skip_trello_config
 
     WARNING
   end
+
+  Afterburn.authorize ENV['TRELLO_USER_NAME'] do |auth|
+    auth.trello_user_key = ENV['TRELLO_USER_KEY'] || 'trello_user_key'
+    auth.trello_user_secret = ENV['TRELLO_USER_SECRET'] || 'trello_user_secret'
+    auth.trello_app_token = ENV['TRELLO_APP_TOKEN'] || 'trello_app_token'
+  end
+
 end
 
 puts "TRELLO CONFIGURED: #{!!ENV['TRELLO_USER_NAME']}"
-
-# Afterburn.authorize ENV['TRELLO_USER_NAME'] do |auth|
-#   auth.trello_user_key = ENV['TRELLO_USER_KEY'] || 'trello_user_key'
-#   auth.trello_user_secret = ENV['TRELLO_USER_SECRET'] || 'trello_user_secret'
-#   auth.trello_app_token = ENV['TRELLO_APP_TOKEN'] || 'trello_app_token'
-# end

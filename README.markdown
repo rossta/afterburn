@@ -17,7 +17,7 @@ mount Afterburn::Server => "/afterburn"
 * Display Lead Time (LT), where LT is the time that has passed between a given
 number of cards (features) in WIP take to reach COMPLETED
 * Display Throughput, where throughput is the number of cards that reach
-COMPLETED within the given internal
+COMPLETED within the given interval
 * Display Cycle Time (CT), where CT is the amount of time it take to complete a
 card; CT is the inverse of Throughput
 * Display WIP Total (WT), where WT is the total number of cards in progress at a given time
