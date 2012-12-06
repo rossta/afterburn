@@ -15,27 +15,30 @@ feature 'Web server', :vcr, :record => :new_episodes do
     visit burn_path
 
     within("ul.projects") do
-      click_link "ActOut"
+      click_link "Challenges"
     end
 
-    page.should have_content("ActOut")
+    page.should have_content("Challenges")
   end
 
   scenario 'edit project' do
     visit burn_path
+    click_link "Challenges"
 
     click_link "Edit"
 
     page.should have_content("Edit Project")
 
-    fill_in "Name", with: "ActIn"
+    fill_in "Name", with: "Platform"
     click_button "Save"
 
-    page.should have_content("ActIn")
+    page.should have_content("Platform")
   end
 
   scenario 'edit lists', :js, record: :all do
     visit burn_path
+
+    click_link "Challenges"
 
     click_link "Edit"
 
@@ -45,7 +48,7 @@ feature 'Web server', :vcr, :record => :new_episodes do
 
     click_link "Done"
 
-    Afterburn.current_projects.first.lists.first.role.should eq("WIP")
+    Afterburn.all_projects.detect { |project| project.name =~ /Challenges/ }.lists.first.role.should eq("WIP")
   end
 
 end
