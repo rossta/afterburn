@@ -27,8 +27,16 @@ module Afterburn
     @current_member ||= Afterburn::Member.first
   end
 
-  def current_projects
+  def all_projects
     Afterburn::Project.by_member(current_member)
+  end
+
+  def current_projects
+    all_projects.select { |project| project.enabled? }
+  end
+
+  def disabled_projects
+    all_projects.select { |project| !project.enabled? }
   end
 
   def current_members

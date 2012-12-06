@@ -34,3 +34,5 @@ footer { padding-top: 20px; border-top: 1px solid #999; color: #333; min-height:
 footer a { color: orange;}
 
 fieldset { padding: 10px; margin-bottom: 10px;}
+
+.disabled.project a { color: gray; }

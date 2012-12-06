@@ -49,6 +49,10 @@ module Afterburn
         Afterburn.current_projects
       end
 
+      def disabled_projects
+        Afterburn.disabled_projects
+      end
+
       def current_project
         @current_project || current_projects.first
       end

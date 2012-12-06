@@ -4,7 +4,15 @@
   </header>
   <ul class="projects side-nav">
     <% current_projects.each do |project| %>
-      <li class="project_<%= project.id %> <%= 'active' if project.id == params[:id] %>">
+      <li class="project project_<%= project.id %> <%= 'active' if project.id == params[:id] %>">
+        <a href="<%= u "projects", project.id %>"><%= project.name %></a>
+      </li>
+    <% end %>
+
+    <li class="divider"></li>
+
+    <% disabled_projects.each do |project| %>
+      <li class="disabled project project_<%= project.id %> <%= 'active' if project.id == params[:id] %>">
         <a href="<%= u "projects", project.id %>"><%= project.name %></a>
       </li>
     <% end %>
